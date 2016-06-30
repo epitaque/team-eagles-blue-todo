@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular2</title>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/es6-shim/es6-shim.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+
+    <script>
+        System.config({
+            map: {
+                "@angular": "node_modules/@angular",
+                "rxjs": "node_modules/rxjs"
+            },
+            packages: {
+                '/': {
+                    defaultExtension: 'js'
+                },
+                '@angular/http': {
+                    defaultExtension: 'js',
+                    main: 'http.js'
+                },
+                '@angular/core': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+                '@angular/router': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+                '@angular/router-deprecated': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+                '@angular/platform-browser-dynamic': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+                '@angular/platform-browser': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+                '@angular/compiler': {
+                    defaultExtension: 'js',
+                    main: 'compiler.js'
+                },
+                '@angular/common': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+                'rxjs' : {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('./main').then(null, console.error.bind(console));
+    </script>
+</head>
+<body>
+<main-app>Loading.....</main-app>
+</body>
+</html>

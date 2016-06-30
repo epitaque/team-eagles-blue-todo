@@ -1,5 +1,6 @@
 var express  = require('express');
 var mongoose = require('mongoose');
+var path = require('path');
 var app      = express();
 var port     = process.env.PORT || 8080;
 var ip       = process.env.IP;
@@ -7,8 +8,10 @@ var ip       = process.env.IP;
 // Mongoose Config
 mongoose.connect('mongodb://jchang4:blueEagle@ds017193.mlab.com:17193/node-todo-demo');
 
-// Express Config
-app.set('view engine', 'ejs');
+// Expose node-modules and NG2 code
+console.log(__dirname);
+app.use('/node_modules', express.static(__dirname + '/node_modules'))
+app.use(express.static('client'));
 
 // Import API and Models
 var UserApi = require('./api/UserApi');
@@ -22,8 +25,8 @@ TodoApi(app);
 var seedDB = require('./seedDB')
 // seedDB(app);    // comment out so I dont run it every time server starts
 
-app.get('*', (req, res) => {
-    res.send("You've reached the 'Other' Route! Congrats! Now go back.");
+app.get('/', (req, res) => {
+    res.sendFile('client/index.html');
 });
 
 app.listen(port);
