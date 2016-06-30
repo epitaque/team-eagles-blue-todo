@@ -19,11 +19,11 @@ export class TodoService {
 	private logoutUrl: string;
 	private getTodosUrl: string;
 
-	public static todoStream: Subject<Todo>; // any new todos for the user will come through here
+	public todoStream: Subject<Todo>; // any new todos for the user will come through here
 											 // when getTodos is called, all the todos are received
-	public static loginStream: Subject<LoginEvent>; // any time you login (which happens when you register)
+	public loginStream: Subject<LoginEvent>; // any time you login (which happens when you register)
 												    // you receive the User information through the LoginEvent
-	public static logoutStream: Subject<boolean>; // any time you logout, a true boolean gets passed through
+	public logoutStream: Subject<boolean>; // any time you logout, a true boolean gets passed through
 												  // here
 
 	constructor(@Inject(Http) private http: Http) {
@@ -31,9 +31,7 @@ export class TodoService {
 		this.loginUrl = 'http://localhost:3000/login';
 		this.logoutUrl = 'http://localhost:3000/logout';
 		this.getTodosUrl = 'http://localhost:3000/user/$id/getTodos';
-	}
 
-	public static initialize() {
 		this.todoStream = new BehaviorSubject<Todo>(null);
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
 		this.logoutStream = new BehaviorSubject<boolean>(null);
@@ -64,9 +62,9 @@ export class TodoService {
 				return login;
 			})
 			.subscribe((login) => {
-				TodoService.loginStream.next(login);
+				this.loginStream.next(login);
 			});
-		return TodoService.loginStream;
+		return this.loginStream;
 	}
 
 	public logout(): Observable<boolean> {
@@ -75,9 +73,9 @@ export class TodoService {
    		let options = new RequestOptions({ headers: headers });
 		   
 		this.http.post(this.logoutUrl, body, options).subscribe((res) => {
-			TodoService.logoutStream.next(true);
+			this.logoutStream.next(true);
 		});
-		return TodoService.logoutStream;
+		return this.logoutStream;
 	}
 
 	public register(user: any): Observable<Object> {
