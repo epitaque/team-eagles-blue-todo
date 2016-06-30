@@ -17,6 +17,7 @@ app.use(express.static('client'));
 var UserApi = require('./api/UserApi');
 var TodoApi = require('./api/TodoAPI');
 var Todo = require('./models/TodoModel');
+
 // Initialize APIs
 UserApi(app);
 TodoApi(app);
