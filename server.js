@@ -1,12 +1,13 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
+var config = require('./lib/config');
 var app      = express();
 var port     = process.env.PORT || 8080;
 var ip       = process.env.IP;
 
 // Mongoose Config
-mongoose.connect('mongodb://jchang4:blueEagle@ds017193.mlab.com:17193/node-todo-demo');
+mongoose.connect(config.db.mongodb);
 
 // Expose node-modules and NG2 code
 console.log(__dirname);
