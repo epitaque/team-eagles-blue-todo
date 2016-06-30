@@ -18,21 +18,24 @@
         // 
         // GET: find all todos
         // POST: check if Todo exists, if not post new Todo
-        app.get('/', function(req, res){
-            Todo.find({}, function(err, todos){
-                if (err) {
-                    handleError(res, err.message, "Failed to get contacts.");
-                }
-                res.json(todos);
+        app.route('/')
+            .get(function(req, res){
+                Todo.find({}, function(err, todos){
+                    if (err) {
+                        handleError(res, err.message, "Failed to get contacts.");
+                    }
+                    res.json(todos);
+                });
+            })
+            .post(function(req, res){
+                var newTodo = new Todo(req.body.newTodo);
+                newTodo.save(function(err){
+                    if(err) return handleError(err);
+                });
+                res.redirect('/');
             });
-        });
 
-        app.post('/', function(req, res){
-            var newTodo = new Todo(req.body.newTodo);
-            newTodo.save(function(err){
-                if(err) return handleError(err);
-            });
-            res.redirect('/')
-        });
+        // For deleting routes, ask team if they want to delete via 
+        //    /todos/:id or if they will send todo._id via req.params 
     }
 })();
