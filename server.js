@@ -14,9 +14,12 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'))
 app.use(express.static('client'));
 
 // Import API and Models
+var UserApi = require('./api/UserApi');
 var TodoApi = require('./api/TodoAPI');
 var Todo = require('./models/TodoModel');
-// Initialize TodoApi
+
+// Initialize APIs
+UserApi(app);
 TodoApi(app);
 
 // Seed Database

@@ -3,7 +3,7 @@
 
     // Generic Error Handler used by all endpoints
     function handleError(res, reason, message, code) {
-        console.log("ERROR" + reason);
+        console.log("ERROR " + reason);
         res.status(code || 500).json({"error": message});
     }
 
@@ -20,22 +20,21 @@
         // POST: check if Todo exists, if not post new Todo
         app.route('/')
             .get(function(req, res){
-                Todo.find({}, function(err, todos){
-                    if (err) {
-                        handleError(res, err.message, "Failed to get contacts.");
-                    }
-                    res.json(todos);
-                });
+                Todo.find({})
+                    .populate('createdBy')
+                    .exec(function(error, todos){
+                        if (error) {
+                            handleError(res, err.message, "Failed to get contacts.");
+                        }
+                        res.send(todos);
+                    });
             })
             .post(function(req, res){
                 var newTodo = new Todo(req.body.newTodo);
-                newTodo.save(function(err){
-                    if(err) return handleError(err);
+                newTodo.save(function(error){
+                    if(error) return handleError(res, error.message, 'Failed to create new todo.');
                 });
                 res.redirect('/');
             });
-
-        // For deleting routes, ask team if they want to delete via 
-        //    /todos/:id or if they will send todo._id via req.params 
     }
 })();
