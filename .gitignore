@@ -7,8 +7,14 @@ npm-debug.log*
 node_modules
 jspm_packages
 
+# Build directories
+dist
+
 # Optional npm cache directory
 .npm
+
+# Babel options
+.babelrc
 
 # Optional REPL history
 .node_repl_history
