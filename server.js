@@ -1,8 +1,8 @@
-var express  = require('express');
-var mongoose = require('mongoose');
-var app      = express();
-var port     = process.env.PORT || 8080;
-var ip       = process.env.IP;
+import express from 'express';
+import mongoose from 'mongoose';
+const app      = express();
+const port     = process.env.PORT || 8080;
+const ip       = process.env.IP;
 
 // Mongoose Config
 mongoose.connect('mongodb://jchang4:blueEagle@ds017193.mlab.com:17193/node-todo-demo');
