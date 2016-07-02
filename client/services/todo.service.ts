@@ -23,7 +23,7 @@ export class TodoService {
 	public loginStream: BehaviorSubject<LoginEvent>;
 
 	constructor(@Inject(Http) private http: Http) {
-		let baseUrl = 'http://localhost:3000/';
+		let baseUrl = 'http://localhost:8080/';
 
 		this.registerUrl = baseUrl + 'signup';
 		this.loginUrl = baseUrl + 'login';
@@ -48,13 +48,24 @@ export class TodoService {
 				let body = res.json();
 				let login = new LoginEvent();
 				
-				login.error = body.error;
-				if(!login.error || login.error == "")
+				console.log(JSON.stringify(body));
+
+				// if the response body is empty, set login.error
+				if(Object.keys(body).length === 0 && body.constructor === Object) {
+					login.error = "Empty response from server.";
+				} // or if the server sent an error, set login.error to that
+				else if(body.error){
+					login.error = body.error;
+				} // no error? alright, set the user
+				else if(body.user)
 				{
 					login.user = new User();
-					login.user.username = body
+					login.user.username = body.username;
+					login.user.email = body.email;
+				} // no .user or .error but its not empty
+				else {
+					login.error = "Unrecognized response from server: " + body;
 				}
-				login.user = new User();
 				this.loginStream.next(login);
 				return login;
 			});

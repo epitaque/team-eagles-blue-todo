@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NgForm}    from '@angular/common';
 import {TodoService} from '../../services/todo.service';
+import {Router} from '@angular/router';
 
 import {User} from '../../models/user';
 import {LoginEvent} from '../../models/loginEvent';
@@ -16,7 +17,8 @@ export class LoginComponent {
     public submitted: boolean;
     public error: string;
     
-    constructor(private todoService: TodoService) {
+    constructor(private todoService: TodoService,
+                private router: Router) {
         this.model = new User();
         this.submitted = false;
     }
@@ -27,6 +29,11 @@ export class LoginComponent {
             if(e.error) {
                 this.error = e.error;
             }
+            else {
+                this.router.navigate(['/']);
+            }
+        }, (error: string) => {
+            this.error = error;
         });
     }
     get diagnostic() { return JSON.stringify(this.model); }
