@@ -1,11 +1,11 @@
 <h1>Login</h1>
 <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
 	<div>
-		<label for="email">Email</label>
-		<input type="text" name="email" [(ngModel)]="model.email"
-			#email="ngModel" required>
-        <div [hidden]="email.valid || email.pristine">
-			Email is required
+		<label for="username">Username</label>
+		<input type="text" name="username" [(ngModel)]="model.username"
+			#username="ngModel" required>
+        <div [hidden]="username.valid || username.pristine">
+			Username is required
         </div>
 	</div>
 	<div>

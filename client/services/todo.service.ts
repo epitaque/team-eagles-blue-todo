@@ -40,6 +40,8 @@ export class TodoService {
 			username: user.username,
 			password: user.password
 		});
+		console.log("Logging in with body: ", body);
+
 		let headers = new Headers({'Content-Type': 'application/json'});
    		let options = new RequestOptions({ headers: headers });
 
@@ -57,7 +59,7 @@ export class TodoService {
 				else if(body.error){
 					login.error = body.error;
 				} // no error? alright, set the user
-				else if(body.user)
+				else if(body.username)
 				{
 					login.user = new User();
 					login.user.username = body.username;
