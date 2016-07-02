@@ -4,13 +4,14 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import {JsonPipe, CORE_DIRECTIVES} from '@angular/common';
+import {Todo} from '../models/todoModel';
+import {LoginEvent} from '../models/loginEvent';
+import {User} from '../models/user';
+
+// rxjs
 import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/subject';
-import {Todo} from '../models/todoModel.ts';
-import {LoginEvent} from '../models/loginEvent.ts';
-import {User} from '../models/user.ts';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
+import '../components/app/rxjs-operators';
 
 @Injectable()
 export class TodoService {
@@ -19,25 +20,20 @@ export class TodoService {
 	private logoutUrl: string;
 	private getTodosUrl: string;
 
-	public todoStream: Subject<Todo>; // any new todos for the user will come through here
-											 // when getTodos is called, all the todos are received
-	public loginStream: Subject<LoginEvent>; // any time you login (which happens when you register)
-												    // you receive the User information through the LoginEvent
-	public logoutStream: Subject<boolean>; // any time you logout, a true boolean gets passed through
-												  // here
+	public loginStream: BehaviorSubject<LoginEvent>;
 
 	constructor(@Inject(Http) private http: Http) {
-		this.registerUrl = 'http://localhost:3000/signup';
-		this.loginUrl = 'http://localhost:3000/login';
-		this.logoutUrl = 'http://localhost:3000/logout';
-		this.getTodosUrl = 'http://localhost:3000/user/$id/getTodos';
+		let baseUrl = 'http://localhost:3000/';
 
-		this.todoStream = new BehaviorSubject<Todo>(null);
+		this.registerUrl = baseUrl + 'signup';
+		this.loginUrl = baseUrl + 'login';
+		this.logoutUrl = baseUrl + 'logout';
+		this.getTodosUrl = baseUrl + 'todos';
+
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
-		this.logoutStream = new BehaviorSubject<boolean>(null);
 	}
 
-	public login(user: any): Observable<LoginEvent> {
+	public login(user: User): Observable<LoginEvent> {
 		console.log("Trying to login...");
 		
 		let body = JSON.stringify({
@@ -47,35 +43,31 @@ export class TodoService {
 		let headers = new Headers({'Content-Type': 'application/json'});
    		let options = new RequestOptions({ headers: headers });
 
-		this.http.post(this.loginUrl, body, options)
+		return this.http.post(this.loginUrl, body, options)
 			.map((res) => {
 				let body = res.json();
 				let login = new LoginEvent();
 				
 				login.error = body.error;
-				if(!login.error && login.error != "")
+				if(!login.error || login.error == "")
 				{
 					login.user = new User();
 					login.user.username = body
 				}
 				login.user = new User();
-				return login;
-			})
-			.subscribe((login) => {
 				this.loginStream.next(login);
+				return login;
 			});
-		return this.loginStream;
 	}
 
-	public logout(): Observable<boolean> {
+	public logout(): Observable<any> {
 		let body = JSON.stringify({});
 		let headers = new Headers({'Content-Type': 'application/json'});
    		let options = new RequestOptions({ headers: headers });
 		   
-		this.http.post(this.logoutUrl, body, options).subscribe((res) => {
-			this.logoutStream.next(true);
+		return this.http.post(this.logoutUrl, body, options).map((res: Response) => {
+			return this.extractData(res);
 		});
-		return this.logoutStream;
 	}
 
 	public register(user: any): Observable<Object> {
@@ -91,7 +83,21 @@ export class TodoService {
 		
 		return this.http.post(this.registerUrl, body, options).map((res) => {
 			console.log("register Recieved res: " + JSON.stringify(res));
-			return JSON.parse(JSON.stringify(res));
+			return this.extractData(res);
 		});
+	}
+
+	private extractData(res: Response) {
+		let body = res.json();
+		return body.data || { };
+	}
+
+	private handleError (error: any) {
+		// In a real world app, we might use a remote logging infrastructure
+		// We'd also dig deeper into the error to get a better message
+		let errMsg = (error.message) ? error.message :
+		error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+		console.error(errMsg); // log to console instead
+		return Observable.throw(errMsg);
 	}
 }

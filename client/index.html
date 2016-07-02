@@ -51,12 +51,17 @@
                     defaultExtension: 'js',
                     main: 'index.js'
                 },
+                '@angular/forms': {
+                    defaultExtension: 'js',
+                    main: 'index.js'
+                },
+
                 'rxjs' : {
                     defaultExtension: 'js'
                 }
             }
         });
-        System.import('./main').then(null, console.error.bind(console));
+        System.import('./components/main').then(null, console.error.bind(console));
     </script>
 </head>
     <body>

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Todo} from '../../models/todoModel';
 import {TodoService} from '../../services/todo.service';
-import {TodoComponent} from './todo.component.ts';
+import {TodoComponent} from './todo.component';
 
 @Component({
     selector: 'todo-list',
