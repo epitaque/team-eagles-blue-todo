@@ -19,21 +19,21 @@ import {NgIf} from '@angular/common';
                 <div *ngIf="loggedIn"> 
                     {{user.username}}
                     {{user.email}}
-                    <button onclick="logout()">Logout</button>
+                    <button (click)="logout()">Logout</button>
                 </div>
-
-                <button (click)="toggleLoggedIn()">Toggle loggedIn</button>
                 `
 })
 export class AppComponent {
     public user: User;
     public error: string;
     public loggedIn: boolean;
+    public static scope: AppComponent;
 
-    constructor(private todoService: TodoService, private zone: NgZone) {
+    constructor(private todoService: TodoService, private _ngZone: NgZone) {
         todoService.loginStream.subscribe(this.onLogin);
         this.loggedIn = false;
         console.log("IsLoggedIn is now: ", this.loggedIn);
+        AppComponent.scope = this;
     }
 
     private toggleLoggedIn() {
@@ -47,16 +47,14 @@ export class AppComponent {
         console.log("loginStream pushed", e);
         if(e == null) return;
         if(e.error) {
-            this.user = null;
-            this.error = e.error;
+            AppComponent.scope.user = null;
+            AppComponent.scope.error = e.error;
         }
         else {
-            this.error = null;
-            this.user = e.user;
+            AppComponent.scope.error = null;
+            AppComponent.scope.user = e.user;
         }
-        this.loggedIn = true;
-        console.log("IsLoggedIn is now: ", this.loggedIn);
-        console.log('this.user is now: ', this.user);
+        AppComponent.scope._ngZone.run(() => { AppComponent.scope.loggedIn = true; });
     }
 
     private logout() {

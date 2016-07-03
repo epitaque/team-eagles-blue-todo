@@ -19,8 +19,10 @@ export class TodoService {
 	private loginUrl: string;
 	private logoutUrl: string;
 	private getTodosUrl: string;
+	private todos: Todo[];
 
 	public loginStream: BehaviorSubject<LoginEvent>;
+	public todoStream: BehaviorSubject<Todo[]>;
 
 	constructor(@Inject(Http) private http: Http) {
 		let baseUrl = 'http://localhost:8080/';
@@ -31,6 +33,7 @@ export class TodoService {
 		this.getTodosUrl = baseUrl + 'todos';
 
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
+		this.todoStream = new BehaviorSubject<Todo[]>([]);
 	}
 
 	public login(user: User): Observable<LoginEvent> {
@@ -78,9 +81,8 @@ export class TodoService {
 		let headers = new Headers({'Content-Type': 'application/json'});
    		let options = new RequestOptions({ headers: headers });
 		   
-		return this.http.post(this.logoutUrl, body, options).map((res: Response) => {
-			return this.extractData(res);
-		});
+		return this.http.post(this.logoutUrl, body, options)
+			.map(this.extractData);
 	}
 
 	public register(user: any): Observable<Object> {
@@ -94,12 +96,20 @@ export class TodoService {
 		let headers = new Headers({'Content-Type': 'application/json'});
    		let options = new RequestOptions({ headers: headers });
 		
-		return this.http.post(this.registerUrl, body, options).map((res) => {
-			console.log("register Recieved res: " + JSON.stringify(res));
-			return this.extractData(res);
-		});
+		return this.http.post(this.registerUrl, body, options)
+			.map(this.extractData);
 	}
 
+	public getTodos(): BehaviorSubject<Todo[]> {
+		this.http.get(this.getTodosUrl)
+			.map(this.extractData)
+			.subscribe((data) => {
+				this.todos = data;
+				this.todoStream.next(data);
+			});
+		return this.todoStream;
+	}
+	
 	private extractData(res: Response) {
 		let body = res.json();
 		return body.data || { };

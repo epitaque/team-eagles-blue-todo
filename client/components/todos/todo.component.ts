@@ -1,7 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TodoService} from '../../services/todo.service';
+import {Todo} from '../../models/TodoModel';
 
 @Component({
     selector: 'todo',
-    template: '<h1>Angular 2 is here</h1>'
+    template: `<ul>
+                    <li *ngFor="let todo of todos">
+                        {{todo.}}
+                    </li>
+                </ul>
+    `
 })
-export class TodoComponent {}
+export class TodoComponent {
+
+
+    
+}
