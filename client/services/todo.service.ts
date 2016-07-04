@@ -30,7 +30,7 @@ export class TodoService {
 		this.registerUrl = baseUrl + 'signup';
 		this.loginUrl = baseUrl + 'login';
 		this.logoutUrl = baseUrl + 'logout';
-		this.getTodosUrl = baseUrl + 'todos';
+		this.getTodosUrl = baseUrl + 'todo';
 
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
@@ -40,8 +40,10 @@ export class TodoService {
 		console.log("Trying to login...");
 		
 		let body = JSON.stringify({
-			username: user.username,
-			password: user.password
+			loginUser: {
+				username: user.username,
+				password: user.password
+			}
 		});
 		console.log("Logging in with body: ", body);
 
@@ -89,9 +91,11 @@ export class TodoService {
 		console.log("Trying to register...");
 		
 		let body = JSON.stringify({
-			email: user.email,
-			username: user.username,
-			password: user.password
+			newUser: {
+				email: user.email,
+				username: user.username,
+				password: user.password
+			}
 		});
 		let headers = new Headers({'Content-Type': 'application/json'});
    		let options = new RequestOptions({ headers: headers });
@@ -102,7 +106,10 @@ export class TodoService {
 
 	public getTodos(): BehaviorSubject<Todo[]> {
 		this.http.get(this.getTodosUrl)
-			.map(this.extractData)
+			.map((res: Response) => {
+				console.log("Response as json: ", res.json());
+				return res.json();
+			})
 			.subscribe((data) => {
 				this.todos = data;
 				this.todoStream.next(data);

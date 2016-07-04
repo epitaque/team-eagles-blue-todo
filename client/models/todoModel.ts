@@ -1,6 +1,6 @@
 export class Todo {
 	constructor(
-		public todoText: string,
+		public task: string,
 		private __importance: number, // 1:low importance, 2: moderately important, 3: highly important
 		public completed: boolean) {
 	}

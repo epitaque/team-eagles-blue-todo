@@ -6,11 +6,11 @@ import {TodoComponent} from './todo.component';
 @Component({
     selector: 'todo-list',
 	providers: [TodoService],
+    directives: [TodoComponent],
     template:  `
 	<ul>
 		<li *ngFor="let todo of todos">
-			{{ todo.text }}
-			{{ todo.importance }}
+			<todo (importance)="todo.importance" [todo]="todo"></todo>
 		</li>
 	</ul>`
 })
@@ -26,8 +26,10 @@ export class TodoListComponent implements OnInit {
     ngOnInit() {
         this.todoService.getTodos().subscribe((todos: Todo[]) => {
             TodoListComponent.scope.todos = todos;
+            console.log("Todos: ", todos);
         }, (error: string) => {
             TodoListComponent.scope.error = error;
+            console.log("TodoList Observable error: " + error);
         })
     }
 }
