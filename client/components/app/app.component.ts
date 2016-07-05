@@ -9,19 +9,7 @@ import {NgIf} from '@angular/common';
     selector: 'main-app',
     providers: [TodoService],
     directives: [ROUTER_DIRECTIVES, NgIf],
-    template: `<h1>Blue Eagles Todo</h1>
-                <nav *ngIf="!loggedIn" >
-                    <a [routerLink]="['/login']">Login</a>
-                    <a [routerLink]="['/register']">Register</a>
-                </nav>
-                <router-outlet></router-outlet>
-
-                <div *ngIf="loggedIn"> 
-                    {{user.username}}
-                    {{user.email}}
-                    <button (click)="logout()">Logout</button>
-                </div>
-                `
+    templateUrl: 'components/app/app.component.html'
 })
 export class AppComponent {
     public user: User;
@@ -67,7 +55,7 @@ export class AppComponent {
             }, (err) => {
                 this.error = err;
             });
-        } 
+        }
         else {
             throw new Error("Can't log out when not logged in.");
         }
