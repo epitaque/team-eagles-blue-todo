@@ -1,6 +1,11 @@
 <nav *ngIf="!loggedIn">
-  <div class="nav-wrapper amber darken-2">
-    <a href="#" class="brand-logo">Blue Eagles Todo</a>
+  <div class="nav-wrapper blue darken-2">
+    <a href="#" class="brand-logo">
+      <div class="logo-wrapper flex-center">
+        <img src="images/eagle.png" class="header-img" />
+        <span>Blue Eagles Todo</span>
+      </div>
+    </a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a [routerLink]="['/login']">Login</a></li>
       <li><a [routerLink]="['/register']">Register</a></li>

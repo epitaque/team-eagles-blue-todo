@@ -1,6 +1,23 @@
-.loader-position-wrapper {
+.flex-center {
   align-items: center;
   display: flex;
-  height: 100vh;
   justify-content: center;
+}
+
+.loader-position-wrapper {
+  height: 100vh;
+}
+
+.logo-wrapper {
+  img {
+    margin: 0 15px;
+  }
+  height: 64px;
+  overflow: hidden;
+}
+
+.header-img {
+  height: 100%;
+  margin: 4px;
+  width: auto;
 }
