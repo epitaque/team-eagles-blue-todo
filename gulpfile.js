@@ -5,7 +5,7 @@ var gulp = require('gulp'),
 
 var files = ['client/styles/*.scss', 'node_modules/materialize-css/sass/materialize.scss'];
 
-gulp.task('default', function() {
+gulp.task('build-sass', function() {
   var tasks = files.map(function(element) {
     return gulp.src(element)
       .pipe(sass())
@@ -16,3 +16,10 @@ gulp.task('default', function() {
       .pipe(gulp.dest('client/styles'));
   })
 });
+
+gulp.task('copy-fonts', function() {
+  gulp.src('node_modules/materialize-css/dist/font/**/*.{ttf,woff,eof,svg}')
+  .pipe(gulp.dest('fonts/'));
+});
+
+gulp.task('default', ['build-sass', 'copy-fonts']);

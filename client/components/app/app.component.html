@@ -12,7 +12,26 @@
     </ul>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<nav *ngIf="loggedIn">
+  <div class="nav-wrapper amber darken-2">
+    <a href="#" class="brand-logo">Blue Eagles Todo</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li>
+        <button class="waves-effect waves-light btn-flat" (click)="logout()">Logout</button>
+      </li>
+
+    </ul>
+    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul id="mobile-menu" class="side-nav">
+      <li><a [routerLink]="['/login']">Login</a></li>
+      <li><a [routerLink]="['/register']">Register</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
 
 <div *ngIf="loggedIn">
   {{user.username}} {{user.email}}
