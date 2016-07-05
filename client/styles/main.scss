@@ -1,6 +1,37 @@
-.loader-position-wrapper {
-  align-items: center;
+
+$nav-height: 120px;
+
+.flex-center {
   display: flex;
-  height: 100vh;
+  align-items: center;
   justify-content: center;
 }
+
+.loader-position-wrapper {
+  height: 100vh;
+}
+
+nav.top-nav,
+.logo-wrapper {
+  height: $nav-height;
+  overflow: hidden;
+}
+
+nav.top-nav {
+  .nav-menu-btn,
+  .nav-menu-btn i,
+  ul li a {
+    height: $nav-height;
+    line-height: $nav-height;
+  }
+}
+
+.header-img {
+  margin: 0 15px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.5;
+}
+
+@import 'components/todos';
+@import 'components/forms';

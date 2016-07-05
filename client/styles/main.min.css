@@ -1,1 +1,1 @@
-.loader-position-wrapper{align-items:center;display:flex;height:100vh;justify-content:center}
+.flex-center{display:flex;align-items:center;justify-content:center}.loader-position-wrapper{height:100vh}.logo-wrapper,nav.top-nav{height:120px;overflow:hidden}nav.top-nav .nav-menu-btn,nav.top-nav .nav-menu-btn i,nav.top-nav ul li a{height:120px;line-height:120px}.header-img{margin:0 15px;width:200px;height:200px;opacity:.5}

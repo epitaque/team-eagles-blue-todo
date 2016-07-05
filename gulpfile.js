@@ -18,7 +18,7 @@ gulp.task('build-sass', function() {
 });
 
 gulp.task('copy-fonts', function() {
-  gulp.src('node_modules/materialize-css/dist/font/**/*.{ttf,woff,woff2,eof,svg}')
+  gulp.src('node_modules/materialize-css/fonts/**/*.{ttf,woff2,eof,svg}')
     .pipe(gulp.dest('client/fonts/'));
 });
 
