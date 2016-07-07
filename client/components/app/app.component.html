@@ -1,23 +1,47 @@
-<nav *ngIf="!loggedIn">
-  <div class="nav-wrapper blue darken-2">
-    <a href="#" class="brand-logo">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
       <div class="logo-wrapper flex-center">
         <img src="images/eagle.png" class="header-img" />
-        <span>Blue Eagles Todo</span>
+        <span class="mdl-layout-title">Blue Eagles Todo</span>
       </div>
-    </a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a [routerLink]="['/login']">Login</a></li>
-      <li><a [routerLink]="['/register']">Register</a></li>
-    </ul>
-    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
-    <ul id="mobile-menu" class="side-nav">
-      <li><a [routerLink]="['/login']">Login</a></li>
-      <li><a [routerLink]="['/register']">Register</a></li>
-    </ul>
+      <div class="mdl-layout-spacer"></div>
+      <nav *ngIf="!loggedIn" class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" [routerLink]="['/login']">Login</a>
+        <a class="mdl-navigation__link" [routerLink]="['/register']">Register</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Blue Eagles Todo</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" [routerLink]="['/login']">Login</a>
+      <a class="mdl-navigation__link" [routerLink]="['/register']">Register</a>
+    </nav>
   </div>
-</nav>
-<nav *ngIf="loggedIn">
+  <main class="mdl-layout__content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+<!-- <div class="nav-wrapper blue darken-2">
+  <a href="#" class="brand-logo">
+    <div class="logo-wrapper flex-center">
+      <img src="images/eagle.png" class="header-img" />
+      <span>Blue Eagles Todo</span>
+    </div>
+  </a>
+  <ul id="nav-mobile" class="right hide-on-med-and-down">
+    <li><a [routerLink]="['/login']">Login</a></li>
+    <li><a [routerLink]="['/register']">Register</a></li>
+  </ul>
+  <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+  <ul id="mobile-menu" class="side-nav">
+    <li><a [routerLink]="['/login']">Login</a></li>
+    <li><a [routerLink]="['/register']">Register</a></li>
+  </ul>
+</div>
+</nav> -->
+<!-- <nav *ngIf="loggedIn">
   <div class="nav-wrapper amber darken-2">
     <a href="#" class="brand-logo">Blue Eagles Todo</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -32,10 +56,10 @@
       <li><a [routerLink]="['/register']">Register</a></li>
     </ul>
   </div>
-</nav>
-<div class="container">
+</nav> -->
+<!-- <div class="container">
   <router-outlet></router-outlet>
-</div>
+</div> -->
 
 
 <div *ngIf="loggedIn">

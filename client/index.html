@@ -2,72 +2,79 @@
 <html lang="en">
 
 <head>
-	<base href=".">
-	<meta charset="UTF-8">
-	<title>Angular2</title>
-	<link rel="stylesheet" type="text/css" href="styles/main.min.css">
+  <base href=".">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angular2</title>
+  <link rel="stylesheet" type="text/css" href="styles/main.min.css">
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
-	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
-	<script src="node_modules/systemjs/dist/system.src.js"></script>
-	<script src="node_modules/es6-shim/es6-shim.js"></script>
-	<script src="node_modules/zone.js/dist/zone.js"></script>
-	<script src="node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <script src="node_modules/es6-shim/es6-shim.js"></script>
+  <script src="node_modules/zone.js/dist/zone.js"></script>
+  <script src="node_modules/reflect-metadata/Reflect.js"></script>
 
-	<script>
-		var map = {
-				"@angular": "node_modules/@angular",
-				"rxjs": "node_modules/rxjs",
-		};
+  <script>
+    var map = {
+      "@angular": "node_modules/@angular",
+      "rxjs": "node_modules/rxjs",
+    };
 
-		var angular2Packages = [
-			'core',
-			'router',
-			'platform-browser-dynamic',
-			'platform-browser',
-			'common',
-			'forms' 
-		];
+    var angular2Packages = [
+      'core',
+      'router',
+      'platform-browser-dynamic',
+      'platform-browser',
+      'common',
+      'forms'
+    ];
 
-		var angular2MaterialPackages = [
-			'core',
-			'button',
-			'card',
-		];
+    var angular2MaterialPackages = [
+      'core',
+      'button',
+      'card',
+    ];
 
-		var packages = {				
-			'/': {
-					defaultExtension: 'js'
-				},
-				'@angular/http': {
-					defaultExtension: 'js',
-					main: 'http.js'
-				},
-				'@angular/compiler': {
-					defaultExtension: 'js',
-					main: 'compiler.js'
-				},
-				'rxjs': {
-					defaultExtension: 'js'
-				}
-			};
+    var packages = {
+      '/': {
+        defaultExtension: 'js'
+      },
+      '@angular/http': {
+        defaultExtension: 'js',
+        main: 'http.js'
+      },
+      '@angular/compiler': {
+        defaultExtension: 'js',
+        main: 'compiler.js'
+      },
+      'rxjs': {
+        defaultExtension: 'js'
+      }
+    };
 
-		angular2Packages.forEach(function(package) {
-			packages['@angular/' + package] = {defaultExtension: 'js', main: 'index.js'};
-		});
+    angular2Packages.forEach(function(package) {
+      packages['@angular/' + package] = {
+        defaultExtension: 'js',
+        main: 'index.js'
+      };
+    });
 
-		System.config({map, packages});
-		System.import('./components/main').then(null, console.error.bind(console));
-	</script>
+    System.config({
+      map,
+      packages
+    });
+    System.import('./components/main').then(null, console.error.bind(console));
+  </script>
 
 </head>
 
 <body>
-	<main-app>
-		Loading...
-	</main-app>
+  <main-app>
+    Loading...
+  </main-app>
 </body>
 
 </html>
