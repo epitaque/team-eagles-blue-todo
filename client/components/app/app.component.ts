@@ -4,6 +4,8 @@ import {TodoService} from '../../services/todo.service';
 import {LoginEvent} from '../../models/LoginEvent';
 import {User} from '../../models/User';
 import {NgIf} from '@angular/common';
+import {OnInit} from '@angular/core';
+declare var jQuery:any;
 
 @Component({
     selector: 'main-app',
@@ -11,7 +13,7 @@ import {NgIf} from '@angular/common';
     directives: [ROUTER_DIRECTIVES, NgIf],
     templateUrl: 'components/app/app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     public user: User;
     public error: string;
     public loggedIn: boolean;
@@ -59,5 +61,27 @@ export class AppComponent {
         else {
             throw new Error("Can't log out when not logged in.");
         }
+    }
+
+    ngOnInit() {
+      console.log('ngOnInit');
+
+
+      jQuery(document).ready(function () {
+
+        //This doesn't fire
+        jQuery('.button-collapse').on('click', function() {
+          console.log('button was clicked and event came directly from element');
+          jQuery('.button-collapse').sideNav();
+        });
+
+        //This fires
+        jQuery(document).on('click', '.button-collapse', function() {
+          console.log('button was clicked');
+          jQuery('.button-collapse').sideNav();
+        });
+
+        console.log('document is ready');
+      })
     }
 }
