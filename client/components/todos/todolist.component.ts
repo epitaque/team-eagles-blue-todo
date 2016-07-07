@@ -9,29 +9,8 @@ declare var $;
     selector: 'todo-list',
 	providers: [TodoService],
     directives: [TodoComponent],
-    template:  `
-    <div class="row" style="margin-top: 20px;">
-        <div class="input-field col m8 s12">
-            <input #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" type="text" id="todoInput">
-            <label for="todoInput">Enter a new Todo</label>
-        </div>
-        <div class="input-field col m3 s6">
-            <select #im>
-                <option value="1" selected>Low Importance</option>
-                <option value="2">Medium Importance</option>
-                <option value="3">High Importance</option>
-            </select>
-            <label>Select Importance...</label>
-        </div>
-        <div class="input-field col m1 s1">
-            <button (click)="addTodo({task: in.value, importance: im.value, completed: false})">Add</button>
-        </div>
-    </div>
-	<ul>
-		<li *ngFor="let todo of todos">
-			<todo (importance)="todo.importance" [todo]="todo"></todo>
-		</li>
-	</ul>`
+    styleUrls: ['components/todos/todolist.component.css'],
+    templateUrl: 'components/todos/todolist.component.html'
 })
 export class TodoListComponent implements OnInit {
     private static scope: TodoListComponent;
