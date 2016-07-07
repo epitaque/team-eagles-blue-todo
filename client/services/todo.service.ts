@@ -30,7 +30,7 @@ export class TodoService {
 		this.registerUrl = baseUrl + 'signup';
 		this.loginUrl = baseUrl + 'login';
 		this.logoutUrl = baseUrl + 'logout';
-		this.getTodosUrl = baseUrl + 'todo';
+		this.getTodosUrl = baseUrl + 'todos';
 
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
@@ -107,6 +107,7 @@ export class TodoService {
 	public getTodos(): BehaviorSubject<Todo[]> {
 		this.http.get(this.getTodosUrl)
 			.map((res: Response) => {
+				console.log("Response: ", res);
 				console.log("Response as json: ", res.json());
 				return res.json();
 			})
