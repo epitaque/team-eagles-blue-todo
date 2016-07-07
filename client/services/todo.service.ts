@@ -19,7 +19,9 @@ export class TodoService {
 	private loginUrl: string;
 	private logoutUrl: string;
 	private getTodosUrl: string;
+	private postTodosUrl: string;
 	private todos: Todo[];
+	private username: string;
 
 	public loginStream: BehaviorSubject<LoginEvent>;
 	public todoStream: BehaviorSubject<Todo[]>;
@@ -30,7 +32,8 @@ export class TodoService {
 		this.registerUrl = baseUrl + 'signup';
 		this.loginUrl = baseUrl + 'login';
 		this.logoutUrl = baseUrl + 'logout';
-		this.getTodosUrl = baseUrl + 'todos';
+		this.getTodosUrl = baseUrl + 'todo';
+		this.postTodosUrl = baseUrl + 'todo';
 
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
@@ -47,7 +50,9 @@ export class TodoService {
 		});
 		console.log("Logging in with body: ", body);
 
-		let headers = new Headers({'Content-Type': 'application/json'});
+		let headers = new Headers({
+										'Content-Type': 'application/json'
+								  });
    		let options = new RequestOptions({ headers: headers });
 
 		return this.http.post(this.loginUrl, body, options)
@@ -67,6 +72,7 @@ export class TodoService {
 				else if(body.username)
 				{
 					login.user = new User();
+					this.username = body.username; // remove this line when iwanttobeawebdev fixes the backend
 					login.user.username = body.username;
 					login.user.email = body.email;
 				} // no .user or .error but its not empty
@@ -80,7 +86,10 @@ export class TodoService {
 
 	public logout(): Observable<any> {
 		let body = JSON.stringify({});
-		let headers = new Headers({'Content-Type': 'application/json'});
+		let headers = new Headers({
+										'Content-Type': 'application/json',
+										'user': JSON.stringify({username: this.username}) 	
+								 });
    		let options = new RequestOptions({ headers: headers });
 		   
 		return this.http.post(this.logoutUrl, body, options)
@@ -97,7 +106,10 @@ export class TodoService {
 				password: user.password
 			}
 		});
-		let headers = new Headers({'Content-Type': 'application/json'});
+		let headers = new Headers({
+										'Content-Type': 'application/json',
+										'user': JSON.stringify({username: this.username})
+									});
    		let options = new RequestOptions({ headers: headers });
 		
 		return this.http.post(this.registerUrl, body, options)
@@ -105,7 +117,14 @@ export class TodoService {
 	}
 
 	public getTodos(): BehaviorSubject<Todo[]> {
-		this.http.get(this.getTodosUrl)
+		let headers = new Headers({
+										'Content-Type': 'application/json',
+										'user': JSON.stringify({username: this.username})
+									});
+   		let options = new RequestOptions({ headers: headers });
+
+
+		this.http.get(this.getTodosUrl, options)
 			.map((res: Response) => {
 				console.log("Response: ", res);
 				console.log("Response as json: ", res.json());
@@ -118,6 +137,27 @@ export class TodoService {
 		return this.todoStream;
 	}
 	
+	public postTodo(todo: Todo): BehaviorSubject<Todo[]> {
+		let body = JSON.stringify({
+			newTodo: todo
+		});
+		let headers = new Headers({
+									'Content-Type': 'application/json',
+									'user': JSON.stringify({username: this.username}) // remove this line when iwanttobeawebdev fixes backend
+								  });
+   		let options = new RequestOptions({ headers: headers });
+
+
+		this.http.post(this.postTodosUrl, body, options)
+			.map((res: Response) => {
+				return this.extractData(res);
+			})
+			.subscribe((body: Object) => {
+				this.getTodos();
+			});
+		return this.todoStream;
+	}
+
 	private extractData(res: Response) {
 		let body = res.json();
 		return body.data || { };
