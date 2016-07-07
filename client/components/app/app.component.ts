@@ -5,7 +5,8 @@ import {LoginEvent} from '../../models/LoginEvent';
 import {User} from '../../models/User';
 import {NgIf} from '@angular/common';
 import {OnInit} from '@angular/core';
-declare var jQuery:any;
+
+declare var jQuery: any;
 
 @Component({
     selector: 'main-app',
@@ -63,25 +64,13 @@ export class AppComponent implements OnInit {
         }
     }
 
+    click1() {
+    }
+
+    click2() {
+    }
+
     ngOnInit() {
-      console.log('ngOnInit');
 
-
-      jQuery(document).ready(function () {
-
-        //This doesn't fire
-        jQuery('.button-collapse').on('click', function() {
-          console.log('button was clicked and event came directly from element');
-          jQuery('.button-collapse').sideNav();
-        });
-
-        //This fires
-        jQuery(document).on('click', '.button-collapse', function() {
-          console.log('button was clicked');
-          jQuery('.button-collapse').sideNav();
-        });
-
-        console.log('document is ready');
-      })
     }
 }

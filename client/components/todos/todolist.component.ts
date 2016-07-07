@@ -43,10 +43,6 @@ export class TodoListComponent implements OnInit {
     }
 
     ngOnInit() {
-        $(document).ready(function() {
-            $('select').material_select();
-        });
-
         this.todoService.getTodos().subscribe((todos: Todo[]) => {
             TodoListComponent.scope.todos = todos;
             console.log("Todos: ", todos);
