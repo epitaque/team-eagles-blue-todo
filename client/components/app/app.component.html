@@ -1,38 +1,32 @@
-<nav *ngIf="!loggedIn" class="top-nav">
+<nav *ngIf="!loggedIn">
   <div class="nav-wrapper blue darken-2">
     <a href="#" class="brand-logo">
       <div class="logo-wrapper flex-center">
-        <img src="images/eagle-logo.png" class="header-img" /> Blue Eagles Todo
+        <img src="images/eagle.png" class="header-img" />
+        <span>Blue Eagles Todo</span>
       </div>
     </a>
-    <a href="#" data-activates="mobile-nav" class="button-collapse nav-menu-btn"><i class="material-icons">menu</i></a>
-
-    <ul class="right hide-on-med-and-down flex-center">
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a [routerLink]="['/login']">Login</a></li>
       <li><a [routerLink]="['/register']">Register</a></li>
     </ul>
-
-    <ul class="side-nav" id="mobile-nav">
+    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul id="mobile-menu" class="side-nav">
       <li><a [routerLink]="['/login']">Login</a></li>
       <li><a [routerLink]="['/register']">Register</a></li>
     </ul>
-
   </div>
 </nav>
-<nav *ngIf="loggedIn" class="top-nav">
-  <div class="nav-wrapper blue darken-2">
-    <a href="#" class="brand-logo">
-      <div class="logo-wrapper flex-center">
-        <img src="images/eagle-logo.png" class="header-img" /> Blue Eagles Todo
-      </div>
-    </a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down flex-center">
+<nav *ngIf="loggedIn">
+  <div class="nav-wrapper amber darken-2">
+    <a href="#" class="brand-logo">Blue Eagles Todo</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li>
-        <button class="waves-effect waves-light btn blue" (click)="logout()">Logout</button>
+        <button class="waves-effect waves-light btn-flat" (click)="logout()">Logout</button>
       </li>
 
     </ul>
-    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul id="mobile-menu" class="side-nav">
       <li><a [routerLink]="['/login']">Login</a></li>
       <li><a [routerLink]="['/register']">Register</a></li>

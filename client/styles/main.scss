@@ -1,9 +1,6 @@
-
-$nav-height: 120px;
-
 .flex-center {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
@@ -11,27 +8,16 @@ $nav-height: 120px;
   height: 100vh;
 }
 
-nav.top-nav,
 .logo-wrapper {
-  height: $nav-height;
+  img {
+    margin: 0 15px;
+  }
+  height: 64px;
   overflow: hidden;
 }
 
-nav.top-nav {
-  .nav-menu-btn,
-  .nav-menu-btn i,
-  ul li a {
-    height: $nav-height;
-    line-height: $nav-height;
-  }
-}
-
 .header-img {
-  margin: 0 15px;
-  width: 200px;
-  height: 200px;
-  opacity: 0.5;
+  height: 100%;
+  margin: 4px;
+  width: auto;
 }
-
-@import 'components/todos';
-@import 'components/forms';
