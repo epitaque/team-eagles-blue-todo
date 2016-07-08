@@ -7,7 +7,7 @@ export const routes: RouterConfig = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'todos', component: TodoListComponent },
-  { path: '', component: TodoListComponent }
+  { path: '', component: LoginComponent }
 ];
 
 export const APP_ROUTER_PROVIDERS = [

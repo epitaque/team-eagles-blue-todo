@@ -6,8 +6,6 @@ import {User} from '../../models/User';
 import {NgIf} from '@angular/common';
 import {OnInit} from '@angular/core';
 
-declare var jQuery: any;
-
 @Component({
     selector: 'main-app',
     providers: [TodoService],

@@ -8,6 +8,7 @@ import {LoginEvent} from '../../models/loginEvent';
 
 @Component({
     selector: 'register',
+    host: { 'class' : 'rcontaine'},
     // we're using a separate html file this time because the form html is long
     templateUrl: 'components/register/register.component.html',
     styleUrls: ['styles/forms.css']

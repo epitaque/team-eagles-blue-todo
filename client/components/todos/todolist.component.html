@@ -1,5 +1,5 @@
-<div class="container g--6" style="margin-top: 20px;">
-	<div class="g--8">
+<div class="container g--12" style="margin-top: 20px;">
+	<div class="g--6">
 		<input type="text" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" 
 			id="todoInput" placeholder="Enter a new Todo">
 	</div>
@@ -9,9 +9,8 @@
 			<option value="2">Medium Importance</option>
 			<option value="3">High Importance</option>
 		</select>
-		<label>Select Importance...</label>
 	</div>
-	<div class="g--1">
+	<div class="g--3">
 		<button (click)="addTodo({task: in.value, importance: im.value, completed: false})">Add</button>
 	</div>
 </div>
@@ -20,3 +19,5 @@
 		<todo (importance)="todo.importance" [todo]="todo"></todo>
 	</li>
 </ul>
+
+<input type="text" placeholder="test">

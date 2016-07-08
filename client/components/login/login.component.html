@@ -1,23 +1,25 @@
-<h1>Login</h1>
-<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-	<div>
-		<label for="username">Username</label>
-		<input type="text" name="username" [(ngModel)]="model.username"
-			#username="ngModel" required>
-        <div [hidden]="username.valid || username.pristine">
-			Username is required
-        </div>
-	</div>
-	<div>
-		<label for="password">Password</label>
-		<input  type="password" name="password" [(ngModel)]="model.password" 
-			#password="ngModel" required>
-		<div [hidden]="password.valid || password.pristine">
-			Password is required
-        </div>
-	</div>
-	<button [disabled]="!loginForm.form.valid" type="submit">Login</button>
-	<div *ngIf="error != null">
-		{{error}}
-	</div>
-</form>
+<div class="card form">
+	<h1>Login</h1>
+	<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+		<div>
+			<label for="username">Username</label>
+			<input type="text" name="username" [(ngModel)]="model.username"
+				#username="ngModel" required>
+			<div [hidden]="username.valid || username.pristine">
+				Username is required
+			</div>
+		</div>
+		<div>
+			<label for="password">Password</label>
+			<input type="password" name="password" [(ngModel)]="model.password" 
+				#password="ngModel" required>
+			<div [hidden]="password.valid || password.pristine">
+				Password is required
+			</div>
+		</div>
+		<button class="btn--raised btn--blue" [disabled]="!loginForm.form.valid" type="submit">Login</button>
+		<div *ngIf="error != null">
+			{{error}}
+		</div>
+	</form>
+</div>

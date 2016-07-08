@@ -32,8 +32,8 @@ export class TodoService {
 		this.registerUrl = baseUrl + 'signup';
 		this.loginUrl = baseUrl + 'login';
 		this.logoutUrl = baseUrl + 'logout';
-		this.getTodosUrl = baseUrl + 'todo';
-		this.postTodosUrl = baseUrl + 'todo';
+		this.getTodosUrl = baseUrl + 'todos';
+		this.postTodosUrl = baseUrl + 'todos';
 
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
