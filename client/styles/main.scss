@@ -3,6 +3,16 @@
 
 .main-app {
   width: 100%;
+  footer.main-footer {
+    position: fixed;
+    bottom: 0;
+  }
+}
+
+.app-logo {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
 }
 
 .nav--super-vertical {
