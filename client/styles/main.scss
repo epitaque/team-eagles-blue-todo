@@ -1,23 +1,19 @@
-.flex-center {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+.main-app {
+  width: 100%;
 }
-
-.loader-position-wrapper {
-  height: 100vh;
-}
-
-.logo-wrapper {
-  img {
-    margin: 0 15px;
+.nav--horizontal {
+  a.nav-fix {
+    background: transparent;
+    color: #fff;
   }
-  height: 64px;
-  overflow: hidden;
+}
+.nav--horizontal a.nav-fix:hover {
+  background: #fff;
+  color: #2980b9;
 }
 
-.header-img {
-  height: 100%;
-  margin: 4px;
-  width: auto;
+.app-logo {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
 }
