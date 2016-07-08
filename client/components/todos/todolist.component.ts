@@ -3,8 +3,6 @@ import {Todo} from '../../models/todoModel';
 import {TodoService} from '../../services/todo.service';
 import {TodoComponent} from './todo.component';
 
-declare var $;
-
 @Component({
     selector: 'todo-list',
 	providers: [TodoService],

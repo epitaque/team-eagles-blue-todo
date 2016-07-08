@@ -3,7 +3,7 @@
 	<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
 		<div>
 			<label for="email">Email</label>
-			<input type="text" name="email" [(ngModel)]="model.email"
+			<input type="email" name="email" [(ngModel)]="model.email"
 				#email="ngModel" required>
 			<div [hidden]="email.valid || email.pristine">
 				Email is required
@@ -20,7 +20,7 @@
 		</div>
 		<div>
 			<label for="password">Password</label>
-			<input class="g--12" type="password" name="password" [(ngModel)]="model.password" 
+			<input type="password" name="password" [(ngModel)]="model.password" 
 				#password="ngModel" required>
 			<div [hidden]="password.valid || password.pristine">
 				Password is required

@@ -10,8 +10,8 @@ import {LoginEvent} from '../../models/loginEvent';
     selector: 'login',
     host: { 'class' : 'rcontaine'},
     // we're using a separate html file this time because the form html is long
-    templateUrl: 'components/login/login.component.html',
-    styleUrls: ['styles/forms.css']
+    templateUrl: 'components/login/login.component.html'
+    //styleUrls: ['styles/forms.css']
 })
 export class LoginComponent {
     public model: User;
@@ -31,7 +31,7 @@ export class LoginComponent {
                 this.error = e.error;
             }
             else {
-                this.router.navigate(['/']);
+                this.router.navigate(['/todos']);
             }
         }, (error: string) => {
             this.error = error;
