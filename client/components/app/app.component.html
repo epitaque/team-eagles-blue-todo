@@ -1,23 +1,24 @@
-<header class="container--baseline bg--belize">
-  <!-- <image class="app-logo" src="images/eagle.png" /> -->
-  <div class="g--6">
-    <h1>Blue Eagles Todo</h1>
+<input type="checkbox" id="nav--super-vertical-responsive" />
+<label for="nav--super-vertical-responsive">MENU</label>
+<aside class="nav--super-vertical g--2 g-m--3 g-s--6 g-t--12 no-margin-vertical">
+  <div class="g--12 logo-area no-margin-vertical">
+    <h4 class="color--belize no-margin-vertical">Blue Eagles</h4>
+    <!-- <image class="app-logo" src="images/eagle.png"></image> -->
   </div>
-
-  <input type="checkbox" id="nav--horizontal-responsive">
-  <label for="nav--horizontal-responsive">MENU</label>
-  <nav *ngIf="!loggedIn" class="g--6 nav--horizontal">
-    <ul>
-      <li><a class="nav-fix" [routerLink]="['/login']">Login</a></li>
-      <li><a class="nav-fix" [routerLink]="['/register']">Register</a></li>
-    </ul>
+  <nav *ngIf="!loggedIn" class="g--12 no-margin-vertical">
+    <a class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+    <a class="nav-fix" [routerLink]="['/register']"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
   </nav>
-</header>
-
-<main>
-  <router-outlet></router-outlet>
+</aside>
+<main class="g--10 g-m--12 m--2 m-m--0 no-margin-vertical">
+  <header class="container--baseline bg--belize">
+    <h1 class="m--1 g--4 g-s--12">Todo List</h1>
+  </header>
+  <div class="g--10 m--1">
+    <router-outlet></router-outlet>
+  </div>
 </main>
-<div *ngIf="loggedIn">
+<!-- <div *ngIf="loggedIn">
   {{user.username}} {{user.email}}
   <button (click)="logout()">Logout</button>
-</div>
+</div> -->
