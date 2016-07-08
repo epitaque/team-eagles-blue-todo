@@ -1,19 +1,11 @@
 .main-app {
   width: 100%;
 }
-.nav--horizontal {
-  a.nav-fix {
-    background: transparent;
-    color: #fff;
-  }
-}
-.nav--horizontal a.nav-fix:hover {
-  background: #fff;
-  color: #2980b9;
-}
 
-.app-logo {
-  width: 100px;
-  height: 100px;
-  margin: 5px;
+.nav--super-vertical {
+  a {
+    i {
+      float: right;
+    }
+  }
 }
