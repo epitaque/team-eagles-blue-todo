@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Todo} from '../../models/todoModel';
 import {TodoService} from '../../services/todo.service';
 import {TodoComponent} from './todo.component';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'todo-list',
@@ -15,17 +16,20 @@ export class TodoListComponent implements OnInit {
     private todos: Todo[];
     private error: string;
 
-    constructor(private todoService: TodoService) {
-        TodoListComponent.scope = this;
+    constructor(private todoService: TodoService, 
+            private router: Router) {
+        TodoListComponent.scope = this;            
     }
 
     ngOnInit() {
+
         this.todoService.getTodos().subscribe((todos: Todo[]) => {
             TodoListComponent.scope.todos = todos;
             console.log("Todos: ", todos);
         }, (error: string) => {
             TodoListComponent.scope.error = error;
             console.log("TodoList Observable error: " + error);
+            this.router.navigate(['/login']);
         })
     }
 

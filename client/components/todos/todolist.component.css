@@ -26,13 +26,10 @@
 	margin: 0;
 }
 
-#todoInput {
-	margin: 0;
+.todolist input[type=email], .todolist input[type=text], .todolist input[type=password], .todolist input[type=textarea] {
+	margin-bottom: 0;
 }
 
-.todolist input[type=text] {
-	background: linear-gradient(to bottom,rgba(255,255,255,0) 96%,#2980b9 96%);
-	width: 100%;
-	background-size: 100% 100%;
-	background-position: -100%;
+.todo_container.top input {
+	width: 66.66667%;
 }

@@ -1,15 +1,4 @@
-<input type="checkbox" id="nav--super-vertical-responsive" />
-<label for="nav--super-vertical-responsive">MENU</label>
-<aside class="nav--super-vertical g--2 g-m--3 g-s--6 g-t--12 no-margin-vertical">
-  <div class="g--12 logo-area no-margin-vertical">
-    <h4 class="color--belize no-margin-vertical">Blue Eagles</h4>
-    <image class="app-logo" src="images/eagle-dark.png"></image>
-  </div>
-  <nav *ngIf="!loggedIn" class="g--12 no-margin-vertical">
-    <a class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
-    <a class="nav-fix" [routerLink]="['/register']"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
-  </nav>
-</aside>
+<eagles-navbar></eagles-navbar>
 <main class="g--10 g-m--12 m--2 m-m--0 no-margin-vertical">
   <header class="container--baseline bg--belize">
     <h1 class="m--1 g--4 g-s--12">Todo List</h1>
@@ -17,15 +6,9 @@
   <div class="g--10 m--1">
     <router-outlet></router-outlet>
   </div>
-
+  <eagles-footer></eagles-footer>
 </main>
-<footer class="bg--clouds g--10 g-m--12 m--2 m-m--0 no-margin-vertical main-footer">
-  <div class="g--10 m--1 no-margin-vertical">
-    <p class="color--concrete no-margin-vertical">
-      Made with <i class="fa fa-heart color--alizarin" aria-hidden="true"></i> by <a href="https://github.com/brianhoy">Brian Hoy</a>, <a href="https://github.com/Jchang4">Justin Chang</a>, and <a href="https://github.com/jcburnette">John Burnette</a>
-    </p>
-  </div>
-</footer>
+
 <!-- <div *ngIf="loggedIn">
   {{user.username}} {{user.email}}
   <button (click)="logout()">Logout</button>

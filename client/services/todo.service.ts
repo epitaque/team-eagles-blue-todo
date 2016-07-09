@@ -23,6 +23,8 @@ export class TodoService {
 	private todos: Todo[];
 	private username: string;
 
+	public loggedIn: boolean;
+	public user: User;
 	public loginStream: BehaviorSubject<LoginEvent>;
 	public todoStream: BehaviorSubject<Todo[]>;
 
@@ -75,6 +77,8 @@ export class TodoService {
 					this.username = body.username; // remove this line when iwanttobeawebdev fixes the backend
 					login.user.username = body.username;
 					login.user.email = body.email;
+					this.loggedIn = true;
+					this.user = user;
 				} // no .user or .error but its not empty
 				else {
 					login.error = "Unrecognized response from server: " + body;
@@ -84,16 +88,20 @@ export class TodoService {
 			});
 	}
 
-	public logout(): Observable<any> {
+	public logout(): BehaviorSubject<LoginEvent> {
 		let body = JSON.stringify({});
 		let headers = new Headers({
 										'Content-Type': 'application/json',
 										'user': JSON.stringify({username: this.username}) 	
 								 });
    		let options = new RequestOptions({ headers: headers });
-		   
-		return this.http.post(this.logoutUrl, body, options)
-			.map(this.extractData);
+		this.http.post(this.logoutUrl, body, options)
+			.map(this.extractData)
+			.subscribe((body: any) => {
+				if(!body.error)
+					this.loginStream.next(null);
+			});
+		return this.loginStream;
 	}
 
 	public register(user: any): Observable<Object> {
@@ -131,6 +139,14 @@ export class TodoService {
 				return res.json();
 			})
 			.subscribe((data) => {
+				if(data.message) {
+					this.todoStream.error(data.message);
+					return;
+				}
+				else if(data.error) {
+					this.todoStream.error(data.error);
+					return;
+				}
 				this.todos = data;
 				this.todoStream.next(data);
 			});

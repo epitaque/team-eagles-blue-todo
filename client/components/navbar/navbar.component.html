@@ -1,0 +1,13 @@
+<input type="checkbox" id="nav--super-vertical-responsive" />
+<label for="nav--super-vertical-responsive">MENU</label>
+<aside class="nav--super-vertical g--2 g-m--3 g-s--6 g-t--12 no-margin-vertical">
+  <div class="g--12 logo-area no-margin-vertical">
+    <h4 class="color--belize no-margin-vertical">Blue Eagles</h4>
+    <image class="app-logo" src="images/eagle-dark.png"></image>
+  </div>
+  <nav class="g--12 no-margin-vertical">
+    <a *ngIf="!loggedIn" class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+    <a *ngIf="!loggedIn" class="nav-fix" [routerLink]="['/register']"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+    <a *ngIf="loggedIn" class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+  </nav>
+</aside>

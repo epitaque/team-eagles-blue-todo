@@ -1,7 +1,17 @@
 <div class="todolist">
 	<div class="todo_container top">
-		<input type="text" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" 
+		<div class="g--1 no-margin-vertical">
+			<button class="btn--float" (click)="addTodo({task: in.value, importance: im.value, completed: false})">+</button>
+		</div>
+		<input class="g--8 no-margin-vertical" type="text" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" 
 			id="todoInput" placeholder="Enter a new Todo">
+		<div class="g--3 no-margin-vertical">
+			<select class="g--12" style="margin-top: auto; margin-bottom: auto;">
+				<option value="1" selected>Low Importance</option>
+				<option value="2">Medium Importance</option>
+				<option value="3">High Importance</option>
+			</select>
+		</div>
 	</div>
 	<ul>
 		<li class="todo_container" *ngFor="let todo of todos">
