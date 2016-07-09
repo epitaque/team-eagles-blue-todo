@@ -1,10 +1,38 @@
-<div class="todolist">
+<div class="g--10 m--1 no-margin-vertical">
+	<h2>My Todo List</h2>
+	<p>This is where you'll enter and keep track of all the items on your todo list.</p>
+</div>
+<div class="td-list g--10 m--1">
+	<div class="td-list-item container--baseline">
+		<div class="g--6 nudge--right no-margin-vertical">
+			<input id="todoInput" type="text" placeholder="Enter a new Todo item" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" id="todoInput" placeholder="Enter a new Todo">
+		</div>
+		<select class="g--3">
+			<option value="1" selected>Low Importance</option>
+			<option value="2">Medium Importance</option>
+			<option value="3">High Importance</option>
+		</select>
+		<button class="nudge--right nudge--left btn--raised" (click)="addTodo({task: in.value, importance: im.value, completed: false})"><i class="fa fa-plus" aria-hidden="true"></i> Add Item</button>
+	</div>
+</div>
+<div class="g--10 m--1 no-margin-vertical">
+	<h2>Add a New Item</h2>
+	<p>Need to add another item? Enter it here!</p>
+</div>
+<div class="td-list g--10 m--1">
+	<ul>
+		<li *ngFor="let todo of todos">
+			<todo (importance)="todo.importance" [todo]="todo"></todo>
+		</li>
+	</ul>
+</div>
+
+<!-- <div class="todolist">
 	<div class="todo_container top">
 		<div class="g--1 no-margin-vertical">
 			<button class="btn--float" (click)="addTodo({task: in.value, importance: im.value, completed: false})">+</button>
 		</div>
-		<input class="g--8 no-margin-vertical" type="text" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" 
-			id="todoInput" placeholder="Enter a new Todo">
+		<input class="g--8 no-margin-vertical" type="text" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" id="todoInput" placeholder="Enter a new Todo">
 		<div class="g--3 no-margin-vertical">
 			<select class="g--12" style="margin-top: auto; margin-bottom: auto;">
 				<option value="1" selected>Low Importance</option>
@@ -18,16 +46,4 @@
 			<todo (importance)="todo.importance" [todo]="todo"></todo>
 		</li>
 	</ul>
-</div>
-
-<!--
-	<div class="todo_container top">
-		<select #im>
-			<option value="1" selected>Low Importance</option>
-			<option value="2">Medium Importance</option>
-			<option value="3">High Importance</option>
-		</select>
-		<button (click)="addTodo({task: in.value, importance: im.value, completed: false})">Add</button>
-	</div>
-
-	!-->
+</div> -->
