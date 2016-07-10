@@ -5,9 +5,18 @@
     <h4 class="color--belize no-margin-vertical">Blue Eagles</h4>
     <image class="app-logo" src="images/eagle-dark.png"></image>
   </div>
+  <div class="g--10 m--1" *ngIf="loggedIn">
+    <div class="container--center">
+      <i class="fa fa-2x nudge--right fa-user color--belize" aria-hidden="true"></i>
+      <div class="no-margin-vertical">
+        <h5 class="color--midnight-blue no-margin-vertical">{{user.username}}</h5>
+        <p class="color--asbestos no-margin-vertical">{{user.email}}</p>
+      </div>
+    </div>
+  </div>
   <nav class="g--12 no-margin-vertical">
     <a *ngIf="!loggedIn" class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
     <a *ngIf="!loggedIn" class="nav-fix" [routerLink]="['/register']"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
-    <a *ngIf="loggedIn" class="nav-fix" (click)="logout()" [routerLink]="['/login']"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+    <a *ngIf="loggedIn" class="nav-fix" (click)="logout()" [routerLink]="['/login']"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
   </nav>
 </aside>
