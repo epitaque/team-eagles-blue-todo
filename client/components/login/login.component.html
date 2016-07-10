@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<button class="btn--raised btn--blue" [disabled]="!loginForm.form.valid" type="submit">Login</button>
-		<div *ngIf="error != null">
+		<div class="card bg--red color--white" *ngIf="error != null">
 			{{error}}
 		</div>
 	</form>

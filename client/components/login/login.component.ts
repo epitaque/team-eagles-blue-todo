@@ -9,9 +9,9 @@ import {LoginEvent} from '../../models/loginEvent';
 @Component({
     selector: 'login',
     host: { 'class' : 'rcontaine'},
-    providers: [TodoService],
     // we're using a separate html file this time because the form html is long
-    templateUrl: 'components/login/login.component.html'
+    templateUrl: 'components/login/login.component.html',
+    styleUrls: ['components/login/login.component.css']
     //styleUrls: ['styles/forms.css']
 })
 export class LoginComponent {
@@ -22,28 +22,26 @@ export class LoginComponent {
     constructor(private todoService: TodoService,
                 private router: Router) {
         this.model = new User();
-        this.submitted = false;
-        this.todoService.loginStream.subscribe((e: LoginEvent)=> {
-            if(e != null && !e.error) {
-                this.router.navigate(['/todos']);
+        this.todoService.loginStream.subscribe((e: LoginEvent) => {
+            if(e == null) {
+                
             }
-        }).unsubscribe();
-    }
-
-    onSubmit() { 
-        this.submitted = true;
-        this.todoService.login(this.model).subscribe((e: LoginEvent) => {
-            console.log("Logged in as ", e);
-            if(e.error) {
+            else if(e.error) { 
                 this.error = e.error;
             }
-            else {
-                console.log("navigating to /todos");
-                this.router.navigate(['/todos']);
+            else if (e.user) {
+                router.navigate(['/todos']);
             }
-        }, (error: string) => {
-            this.error = error;
+            else {
+                this.error = "Unknown error logging in.";
+            }
         });
+        this.submitted = false;
+    }
+
+    onSubmit() {
+        this.todoService.login(this.model);
+        this.submitted = true;
     }
     get diagnostic() { return JSON.stringify(this.model); }
 }

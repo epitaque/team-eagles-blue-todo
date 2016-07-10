@@ -9,6 +9,7 @@ import {Todo} from '../../models/TodoModel';
     selector: 'todo',
     inputs: ['todo'],
     outputs: ['todo'],
+    styles: ['p { word-wrap: break-word; }'],
     template: `<div class="container" style="width: 100%" [style.background-color]="todo.completed ? 'gray' : 'transparent'">
                     <div class="g--1 no-margin-vertical">
                         <input class="g--1 no-margin-vertical" type="checkbox" [(ngModel)]="todo.completed">

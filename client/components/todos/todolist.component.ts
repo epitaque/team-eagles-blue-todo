@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 
 @Component({
     selector: 'todo-list',
-	providers: [TodoService],
     directives: [TodoComponent],
     styleUrls: ['components/todos/todolist.component.css'],
     templateUrl: 'components/todos/todolist.component.html'
@@ -25,10 +24,8 @@ export class TodoListComponent implements OnInit {
 
         this.todoService.getTodos().subscribe((todos: Todo[]) => {
             TodoListComponent.scope.todos = todos;
-            console.log("Todos: ", todos);
         }, (error: string) => {
             TodoListComponent.scope.error = error;
-            console.log("TodoList Observable error: " + error);
             this.router.navigate(['/login']);
         })
     }

@@ -8,6 +8,6 @@
   <nav class="g--12 no-margin-vertical">
     <a *ngIf="!loggedIn" class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
     <a *ngIf="!loggedIn" class="nav-fix" [routerLink]="['/register']"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
-    <a *ngIf="loggedIn" class="nav-fix" [routerLink]="['/login']"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+    <a *ngIf="loggedIn" class="nav-fix" (click)="logout()" [routerLink]="['/login']"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
   </nav>
 </aside>

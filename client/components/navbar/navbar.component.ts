@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import {ROUTER_DIRECTIVES, Router, Event} from '@angular/router';
 import {LoginEvent} from '../../models/LoginEvent';
 import {User} from '../../models/User';
 import {TodoService} from '../../services/todo.service';
@@ -7,7 +7,6 @@ import {TodoService} from '../../services/todo.service';
 @Component({
 	selector: 'eagles-navbar',
 	directives: [ROUTER_DIRECTIVES],
-	providers: [TodoService],
 	templateUrl: 'components/navbar/navbar.component.html',
 })
 export class NavbarComponent {
@@ -16,32 +15,27 @@ export class NavbarComponent {
 	private error: string;
 	private static scope: NavbarComponent;
 
-    constructor(private todoService: TodoService, private _ngZone: NgZone) {
-        todoService.loginStream.subscribe(this.onLogin);
-        this.loggedIn = false;
-        console.log("IsLoggedIn is now: ", this.loggedIn);
+    constructor(private router: Router, private todoService: TodoService, private _ngZone: NgZone) {
         NavbarComponent.scope = this;
-    }
-
-    private toggleLoggedIn() {
-        console.log("User now: ", this.user);
-        console.log("IsLoggedIn before: ", this.loggedIn);
-        this.loggedIn = !this.loggedIn;
-        console.log("IsLoggedIn is now: ", this.loggedIn);
-    }
-
-    private onLogin(e: LoginEvent) {
-        console.log("loginStream pushed", e);
-        if(e == null) return;
-        if(e.error) {
-            NavbarComponent.scope.user = null;
-            NavbarComponent.scope.error = e.error;
-        }
-        else {
-            NavbarComponent.scope.error = null;
-            NavbarComponent.scope.user = e.user;
-        }
-        NavbarComponent.scope._ngZone.run(() => { NavbarComponent.scope.loggedIn = true; });
+        this.todoService.loginStream.subscribe((e: LoginEvent) => {
+            console.log("Navbar loginStream pushed", e);
+            if(e == null) {}
+            else if(e.error) {
+                this.user = null;
+                this.error = e.error;
+            }
+            else {
+                this.error = null;
+                this.user = e.user;
+                this.loggedIn = true;
+            }
+            //NavbarComponent.scope._ngZone.run(() => { NavbarComponent.scope.loggedIn = true; });
+        }, (err) => {
+            console.log("Navbar loginStream error", err);
+        }, () => {
+            console.log("Navbar loginStream completed");
+        });
+        this.loggedIn = false;
     }
 
     private logout() {
@@ -59,6 +53,4 @@ export class NavbarComponent {
             throw new Error("Can't log out when not logged in.");
         }
     }
-
-	}
 }

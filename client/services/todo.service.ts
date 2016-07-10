@@ -18,10 +18,10 @@ export class TodoService {
 	private registerUrl: string;
 	private loginUrl: string;
 	private logoutUrl: string;
+	private checkUserUrl: string;
 	private getTodosUrl: string;
 	private postTodosUrl: string;
 	private todos: Todo[];
-	private username: string;
 
 	public loggedIn: boolean;
 	public user: User;
@@ -29,6 +29,8 @@ export class TodoService {
 	public todoStream: BehaviorSubject<Todo[]>;
 
 	constructor(@Inject(Http) private http: Http) {
+		console.log("TodoService", Math.random(), " instantiated.");
+
 		let baseUrl = 'http://localhost:8080/';
 
 		this.registerUrl = baseUrl + 'signup';
@@ -36,12 +38,46 @@ export class TodoService {
 		this.logoutUrl = baseUrl + 'logout';
 		this.getTodosUrl = baseUrl + 'todo';
 		this.postTodosUrl = baseUrl + 'todo';
+		this.checkUserUrl = baseUrl + 'self';
 
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
+		this.loginStream.subscribe((e) => {
+			console.log("LoginStream pushed: ", e);
+		})
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
+		this.checkUser();
 	}
 
-	public login(user: User): Observable<LoginEvent> {
+	public checkUser(): BehaviorSubject<LoginEvent> {
+		console.log("checking if user exists...");
+		this.http.get(this.checkUserUrl)
+			.map((res: Response) => {
+				return res.json();
+			})
+			.subscribe((body: any) => {
+				console.log("checkUser res: ", body);
+				if(body.message) {
+					this.loggedIn = false;
+					this.user = null;
+					console.log("it doesn't. error: ", body.message);
+				}
+				else if(body.username && body.email) {
+					console.log("it does!: ", body.username, body.email );
+					this.user = new User;
+					this.user.email = body.email;
+					this.user.username = body.username;
+					let e: LoginEvent = new LoginEvent();
+					e.user = this.user;
+					console.log("Pushing this event to loginStream: ", e);
+					this.loginStream.next(e);
+					this.loggedIn = true;
+				}
+				return;
+			})
+		return this.loginStream;
+	}
+
+	public login(user: User): BehaviorSubject<LoginEvent> {
 		console.log("Trying to login...");
 		
 		let body = JSON.stringify({
@@ -53,11 +89,11 @@ export class TodoService {
 		console.log("Logging in with body: ", body);
 
 		let headers = new Headers({
-										'Content-Type': 'application/json'
-								  });
+				'Content-Type': 'application/json'
+			});
    		let options = new RequestOptions({ headers: headers });
 
-		return this.http.post(this.loginUrl, body, options)
+		this.http.post(this.loginUrl, body, options)
 			.map((res) => {
 				let body = res.json();
 				let login = new LoginEvent();
@@ -74,7 +110,6 @@ export class TodoService {
 				else if(body.username)
 				{
 					login.user = new User();
-					this.username = body.username; // remove this line when iwanttobeawebdev fixes the backend
 					login.user.username = body.username;
 					login.user.email = body.email;
 					this.loggedIn = true;
@@ -83,22 +118,22 @@ export class TodoService {
 				else {
 					login.error = "Unrecognized response from server: " + body;
 				}
-				this.loginStream.next(login);
 				return login;
+			})
+			.subscribe((e: LoginEvent) => {
+				this.loginStream.next(e);
 			});
+		return this.loginStream;
 	}
 
 	public logout(): BehaviorSubject<LoginEvent> {
-		let body = JSON.stringify({});
-		let headers = new Headers({
-										'Content-Type': 'application/json',
-										'user': JSON.stringify({username: this.username}) 	
-								 });
-   		let options = new RequestOptions({ headers: headers });
-		this.http.post(this.logoutUrl, body, options)
+		console.log("Logging out...");
+		this.http.get(this.logoutUrl)
 			.map(this.extractData)
 			.subscribe((body: any) => {
 				if(!body.error)
+					this.loggedIn = false;
+					this.user = null;
 					this.loginStream.next(null);
 			});
 		return this.loginStream;
@@ -115,9 +150,8 @@ export class TodoService {
 			}
 		});
 		let headers = new Headers({
-										'Content-Type': 'application/json',
-										'user': JSON.stringify({username: this.username})
-									});
+				'Content-Type': 'application/json'
+			});
    		let options = new RequestOptions({ headers: headers });
 		
 		return this.http.post(this.registerUrl, body, options)
@@ -126,9 +160,8 @@ export class TodoService {
 
 	public getTodos(): BehaviorSubject<Todo[]> {
 		let headers = new Headers({
-										'Content-Type': 'application/json',
-										'user': JSON.stringify({username: this.username})
-									});
+				'Content-Type': 'application/json'
+			});
    		let options = new RequestOptions({ headers: headers });
 
 
@@ -158,9 +191,8 @@ export class TodoService {
 			newTodo: todo
 		});
 		let headers = new Headers({
-									'Content-Type': 'application/json',
-									'user': JSON.stringify({username: this.username}) // remove this line when iwanttobeawebdev fixes backend
-								  });
+				'Content-Type': 'application/json'
+			});
    		let options = new RequestOptions({ headers: headers });
 
 
@@ -175,16 +207,8 @@ export class TodoService {
 	}
 
 	private extractData(res: Response) {
+		console.log("extracting data: ", res);
 		let body = res.json();
 		return body.data || { };
-	}
-
-	private handleError (error: any) {
-		// In a real world app, we might use a remote logging infrastructure
-		// We'd also dig deeper into the error to get a better message
-		let errMsg = (error.message) ? error.message :
-		error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-		console.error(errMsg); // log to console instead
-		return Observable.throw(errMsg);
 	}
 }
