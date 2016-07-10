@@ -6,7 +6,11 @@
 	<div class="td-list g--10 m--1">
 		<div class="td-list-item container--baseline">
 			<div class="g--6 nudge--right no-margin-vertical">
-				<input id="todoInput" type="text" placeholder="Enter a new Todo item" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" id="todoInput" placeholder="Enter a new Todo">
+				<div class="input-field">
+					<input id="todoInput" type="text" class="input-control" placeholder="Enter a new Todo item" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" id="todoInput" placeholder="Enter a new Todo">
+					<span class="input-bar"></span>
+				</div>
+
 			</div>
 			<select #im class="g--3">
 				<option value="1" selected>Low Importance</option>

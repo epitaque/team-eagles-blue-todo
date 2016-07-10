@@ -1,11 +1,34 @@
 //All styling not included in materialize related to forms
-input[type='email'],
-input[type='password'],
-input[type='text'] {
-  background-repeat: no-repeat;
-  background-position: -200px 0;
-  background-size: 200px 100%;
-  //background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, $primary-color 96%);
-  border-bottom: solid 1px $primary-color;
-  color: $primary-color;
+.input-field {
+  .input-bar {
+    position: relative;
+    display: block;
+
+    &:before, &:after{
+      content: '';
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      background: $input-accent-color;
+      transition: 0.2s ease all;
+    }
+    &:before {
+      left: 0;
+    }
+
+  }
+  .input-control  {
+    background: transparent;
+    border-color: $muted-color;
+    width: 100%;
+    margin-bottom: 0px;
+    &:focus {
+      border-color: transparent !important;
+      & ~ :before
+       {
+        width: 100%;
+      }
+    }
+  }
 }
