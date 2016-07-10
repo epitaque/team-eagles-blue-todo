@@ -25,8 +25,8 @@
     margin-bottom: 0px;
     &:focus {
       border-color: transparent !important;
-      & ~ :before
-       {
+      & ~ :before,
+      &:not(:placeholder-shown) {
         width: 100%;
       }
     }
