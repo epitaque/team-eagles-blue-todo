@@ -23,15 +23,15 @@ import {TodoEdit} from '../../models/TodoEdit';
                     <p *ngIf="!editMode" class="g--8 no-margin-vertical" (click)="enterEditMode()"> {{todo.task}} </p>
                     <div *ngIf="editMode" class="g--8 no-margin-vertical">
                         <div class="input-field">
-                            <input id="todoInput" type="text" class="input-control" placeholder="Enter a new Todo item" #in (keyup.enter)="addTodo({task: in.value, importance: im.value, completed: false})" id="todoInput" placeholder="Enter a new Todo">
+                            <input [(ngModel)]="todo.task" type="text" class="input-control" (keyup.enter)="editTodo(); leaveEditMode();" placeholder="Edit your todo">
                             <span class="input-bar"></span>
                         </div>
                     </div>
 
-                    <select class="g--2 no-margin-vertical" (change)="editTodo()" [(ngModel)]="todo.importance">
-                        <option [selected]="todo.importance == 1">Low Importance</option>
-                        <option [selected]="todo.importance == 2">Medium Importance</option>
-                        <option [selected]="todo.importance == 3">High Importance</option>
+                    <select class="g--2 #sl no-margin-vertical" [(ngModel)]="todo.importance" (change)="editTodo()">
+                        <option [value]="1" value="1" [selected]="todo.importance == 1">Low Importance</option>
+                        <option [value]="2" value="2" [selected]="todo.importance == 2">Medium Importance</option>
+                        <option [value]="3" value="3" [selected]="todo.importance == 3">High Importance</option>
                     </select>
 
                     <button class="btn--float" (click)="removeTodo()">-</button>
@@ -43,17 +43,24 @@ export class TodoComponent {
     private todo: Todo;
     private editMode: boolean;
 
-    editTodo(importance?: number) {
+    private editTodo(importance?: number) {
         if(importance) {this.todo.importance = importance};
-        console.log("editing todo");
-        this.todoUpdated.emit(new TodoEdit(false, this.todo));
+        console.log("editing todo", JSON.stringify(importance));
+        setTimeout(() => {
+            this.todoUpdated.emit(new TodoEdit(false, this.todo));
+            return null;
+        }, 100);
     }
 
-    enterEditMode() {
-
+    private enterEditMode() {
+        this.editMode = true;
     }
 
-    removeTodo() {
+    private leaveEditMode() {
+        this.editMode = false;
+    }
+
+    private removeTodo() {
         this.todoUpdated.emit(new TodoEdit(true, this.todo));
     }
 }

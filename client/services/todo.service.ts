@@ -235,7 +235,7 @@ export class TodoService {
 	}
 
 	public editTodo(todo) {
-		console.log("service editing todo");
+		console.log("service editing todo", todo);
 
 		let body = JSON.stringify({
 			todo: todo
