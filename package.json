@@ -5,8 +5,9 @@
   "main": "./server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc --watch | nodemon lib/server.js",
+    "start": "node lib/server.js",
     "brianstart": "tsc --watch | nodemon lib/server.js",
+    "postinstall": "tsc",
     "build": "babel lib -d dist",
     "serve": "node dist/server.js"
   },
