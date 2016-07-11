@@ -39,6 +39,7 @@ export class TodoListComponent implements OnInit {
             console.log("TodoService pushed todos");
             this.todos = todos;
         }, (error: string) => {
+            console.log("TodoService pushed error");
             this.error = error;
         }, () => {
             console.log("TodoService todo completed");

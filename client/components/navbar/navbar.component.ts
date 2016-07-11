@@ -17,40 +17,40 @@ export class NavbarComponent {
 
     constructor(private router: Router, private todoService: TodoService, private _ngZone: NgZone) {
         NavbarComponent.scope = this;
+        let scope = NavbarComponent.scope;
         this.todoService.loginStream.subscribe((e: LoginEvent) => {
-            console.log("Navbar loginStream pushed", e);
-            if(e == null) {}
-            else if(e.error) {
+            if(e == null) {
                 this.user = null;
-                this.error = e.error;
+                this.error = null;
+
+                this.loggedIn = false;
+                this.router.navigate(['/login']);
+            }
+            else if(e.error) {
+                scope.user = null;
+                scope.error = e.error;
             }
             else {
-                this.error = null;
-                this.user = e.user;
-                this.loggedIn = true;
+                scope.error = null;
+                scope.user = e.user;
+                NavbarComponent.scope.loggedIn = true;
             }
-            //NavbarComponent.scope._ngZone.run(() => { NavbarComponent.scope.loggedIn = true; });
         }, (err) => {
             console.log("Navbar loginStream error", err);
         }, () => {
             console.log("Navbar loginStream completed");
         });
+
         this.loggedIn = false;
     }
 
     private logout() {
         if(this.user != null) {
-            this.todoService.logout().subscribe((res) => {
-                this.user = null;
-                this.error = null;
-                this.loggedIn = false;
-
-            }, (err) => {
-                this.error = err;
-            });
+            this.todoService.logout();
         }
         else {
-            throw new Error("Can't log out when not logged in.");
+            this.error = "Can't log out when not logged in.";
+            this.router.navigate(['/login']);
         }
     }
 }

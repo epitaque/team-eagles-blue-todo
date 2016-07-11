@@ -17,6 +17,7 @@ import '../components/app/rxjs-operators';
 @Injectable()
 export class TodoService {
 	private registerUrl: string;
+	private editUserUrl: string;
 	private loginUrl: string;
 	private logoutUrl: string;
 	private checkUserUrl: string;
@@ -32,13 +33,15 @@ export class TodoService {
 	public logoutStream: Subject<boolean>;
 	public loginStream: BehaviorSubject<LoginEvent>;
 	public todoStream: BehaviorSubject<Todo[]>;
+	public editUserStream: Subject<any>;
 
 	constructor(@Inject(Http) private http: Http) {
 		console.log("TodoService", Math.random(), " instantiated.");
 
 		let baseUrl = 'http://localhost:8080/';
-
+	 	this.editUserUrl = baseUrl + 'self';
 		this.registerUrl = baseUrl + 'signup';
+		this.editTodosUrl = baseUrl + 'self';
 		this.loginUrl = baseUrl + 'login';
 		this.logoutUrl = baseUrl + 'logout';
 		this.getTodosUrl = baseUrl + 'todo';
@@ -46,10 +49,14 @@ export class TodoService {
 		this.postTodosUrl = baseUrl + 'todo';
 		this.checkUserUrl = baseUrl + 'self';
 		this.deleteTodosUrl = baseUrl + 'deletetodo';
+		this.editUserStream = new Subject<any>();
 		this.logoutStream = new Subject<boolean>();
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
-		this.loginStream.subscribe((e) => {
+		this.loginStream.subscribe((e: LoginEvent) => {
 			console.log("LoginStream pushed: ", e);
+			if(e && e.user) {
+				this.user = e.user;
+			}
 		})
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
 		this.todoStream.subscribe((e) => {
@@ -76,6 +83,7 @@ export class TodoService {
 					console.log("it does!: ", body.username, body.email );
 					this.user = new User;
 					this.user.email = body.email;
+					console.log("Setting user email to ", body.email);
 					this.user.username = body.username;
 					let e: LoginEvent = new LoginEvent();
 					e.user = this.user;
@@ -137,17 +145,24 @@ export class TodoService {
 		return this.loginStream;
 	}
 
-	public logout(): BehaviorSubject<LoginEvent> {
+	public logout(): Subject<boolean> {
 		console.log("Logging out...");
 		this.http.get(this.logoutUrl)
 			.map(this.extractData)
 			.subscribe((body: any) => {
-				if(!body.error)
+				if(!body.error) {
+					console.log("Received logout response");
 					this.loggedIn = false;
 					this.user = null;
 					this.loginStream.next(null);
+					this.logoutStream.next(true);
+				}
+				else {
+					this.logoutStream.next(false);
+				}
+
 			});
-		return this.loginStream;
+		return this.logoutStream;
 	}
 
 	public register(user: any): Observable<Object> {
@@ -184,11 +199,11 @@ export class TodoService {
 			})
 			.subscribe((data) => {
 				if(data.message) {
-					this.todoStream.error(data.message);
+					//this.todoStream.error(data.message);
 					return;
 				}
 				else if(data.error) {
-					this.todoStream.error(data.error);
+					//this.todoStream.error(data.error);
 					return;
 				}
 				this.todos = data;
@@ -232,6 +247,29 @@ export class TodoService {
 		});
 
 		return this.todoStream;
+	}
+
+	public editProfile(user: User): Subject<any> {
+		console.log("Editing profile...");
+		
+		let body = JSON.stringify({
+			user: {
+				email: user.email,
+				username: user.username,
+				password: user.password
+			}
+		});
+		let headers = new Headers({
+				'Content-Type': 'application/json'
+			});
+   		let options = new RequestOptions({ headers: headers });
+		
+		this.http.post(this.editUserUrl, body, options)
+			.map(this.extractData)
+			.subscribe((body) => {
+				this.editUserStream.next(body);
+			});
+		return this.editUserStream;
 	}
 
 	public editTodo(todo) {

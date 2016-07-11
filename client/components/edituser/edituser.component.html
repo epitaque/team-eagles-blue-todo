@@ -1,0 +1,34 @@
+<div class="card form">
+	<h1>Edit User</h1>
+	<form *ngIf="todoService.loggedIn == true" (ngSubmit)="onSubmit()" #editForm="ngForm">
+		<div>
+			<label for="email">Email</label>
+			<input type="email" name="email" [(ngModel)]="model.email"
+				#email="ngModel" required>
+			<div class="card bg--red color--white" [hidden]="email.valid || email.pristine">
+				Email is required
+			</div>
+		</div>
+
+		<div>
+			<label for="username">Username</label>
+			<input type="text" name="username" [(ngModel)]="model.username"
+				#username="ngModel" required>
+			<div class="card bg--red color--white" [hidden]="username.valid || username.pristine">
+				Username is required
+			</div>
+		</div>
+		<div>
+			<label for="password">Password</label>
+			<input type="password" name="password" [(ngModel)]="model.password" 
+				#password="ngModel" required>
+			<div class="card bg--red color--white" [hidden]="password.valid">
+				Password is required
+			</div>
+		</div>
+		<button class="btn--raised btn--blue" [disabled]="!editForm.form.valid" type="submit">Edit User</button>
+		<div *ngIf="error != null">
+			{{error}}
+		</div>
+	</form>
+</div>
