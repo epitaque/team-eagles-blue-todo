@@ -21,7 +21,7 @@
 		<div>
 			<label for="password">Password</label>
 			<input type="password" name="password" [(ngModel)]="model.password" 
-				#password="ngModel" required>
+				#password="ngModel">
 			<div class="card bg--red color--white" [hidden]="password.valid">
 				Password is required
 			</div>
