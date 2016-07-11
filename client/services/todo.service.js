@@ -162,6 +162,7 @@ var TodoService = (function () {
     };
     TodoService.prototype.getTodos = function () {
         var _this = this;
+        console.log("Getting todos");
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
         });
@@ -199,7 +200,7 @@ var TodoService = (function () {
             .map(function (res) {
             return _this.extractData(res);
         })
-            .subscribe(function (todos) {
+            .subscribe(function (res) {
             _this.getTodos();
         });
         return this.todoStream;

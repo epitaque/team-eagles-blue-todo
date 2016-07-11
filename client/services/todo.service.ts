@@ -185,11 +185,12 @@ export class TodoService {
 	}
 
 	public getTodos(): BehaviorSubject<Todo[]> {
+		console.log("Getting todos");
+
 		let headers = new Headers({
 				'Content-Type': 'application/json'
 			});
    		let options = new RequestOptions({ headers: headers });
-
 
 		this.http.get(this.getTodosUrl, options)
 			.map((res: Response) => {
@@ -226,7 +227,7 @@ export class TodoService {
 			.map((res: Response) => {
 				return this.extractData(res);
 			})
-			.subscribe((todos: Todo[]) => {
+			.subscribe((res) => {
 				this.getTodos();
 			});
 		return this.todoStream;
