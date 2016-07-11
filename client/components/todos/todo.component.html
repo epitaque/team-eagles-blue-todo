@@ -1,0 +1,21 @@
+<div class="container--center flex-container-fix">
+  <div class="g--1 g-m--1 g-s--1 g-t--1">
+    <input type="checkbox" (click)="editTodo()" [(ngModel)]="todo.completed">
+  </div>
+  <div class="g--5 g-m--5 g-s--11 g-t--11">
+    <div *ngIf="!editMode" class="input-edit-container nudge--right container--baseline color--concrete" (click)="enterEditMode()"><i class="fa fa-pencil nudge--right" aria-hidden="true"></i> {{todo.task}} </div>
+    <div *ngIf="editMode" class="input-field nudge--right">
+      <input [(ngModel)]="todo.task" type="text" class="input-control" (keyup.enter)="editTodo(); leaveEditMode(); " placeholder="Edit your todo" />
+      <span class="input-bar"></span>
+    </div>
+  </div>
+
+  <div class="g--6 g-m--6 g-s--12 g-t--12 no-margin-vertical container--baseline">
+    <select class="g--8 g-m--8 g-s--6 g-t--6" [(ngModel)]="todo.importance" (change)="editTodo()">
+      <option [value]="1" value="1" [selected]="todo.importance==1">Low Importance</option>
+      <option [value]="2" value="2" [selected]="todo.importance==2">Medium Importance</option>
+      <option [value]="3" value="3" [selected]="todo.importance==3">High Importance</option>
+    </select>
+    <button class="btn--red btn--raised g--2 m--1 g-m--3 g-s--3 g-t--3 no-maring-vertical right" (click)="removeTodo()"><i class="fa fa-times" aria-hidden="true"></i></button>
+  </div>
+</div>

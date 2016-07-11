@@ -32,3 +32,22 @@
     }
   }
 }
+
+select.padding-fix {
+    padding: 9px !important;
+}
+
+.input-edit-container {
+  min-height: 37px;
+  line-height: 37px;
+  cursor: pointer;
+  i {
+    opacity: 0;
+  }
+  &:hover {
+    color: $input-accent-color;
+    i {
+      opacity: 1;
+    }
+  }
+}
