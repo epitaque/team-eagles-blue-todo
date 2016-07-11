@@ -235,7 +235,7 @@ export class TodoService {
 	}
 
 	public editTodo(todo) {
-		console.log("service editing todo", todo);
+		console.log("service editing todo with body", todo);
 
 		let body = JSON.stringify({
 			todo: todo
@@ -244,7 +244,6 @@ export class TodoService {
 				'Content-Type': 'application/json'
 			});
    		let options = new RequestOptions({ headers: headers });
-
 
 		this.http.put(this.editTodosUrl, body, options).subscribe((res) => {
 			console.log("put request response received", res);
