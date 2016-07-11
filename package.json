@@ -5,7 +5,7 @@
   "main": "./server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc --watch | nodemon lib/server.js --exec babel-node",
+    "start": "tsc --watch | nodemon lib/server.js",
     "brianstart": "tsc --watch | nodemon lib/server.js",
     "build": "babel lib -d dist",
     "serve": "node dist/server.js"
