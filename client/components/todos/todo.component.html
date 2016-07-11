@@ -2,15 +2,15 @@
   <div class="g--1 g-m--1 g-s--1 g-t--1">
     <input type="checkbox" (click)="editTodo()" [(ngModel)]="todo.completed">
   </div>
-  <div class="g--5 g-m--5 g-s--11 g-t--11">
-    <div *ngIf="!editMode" class="input-edit-container nudge--right container--baseline color--concrete" (click)="enterEditMode()"><i class="fa fa-pencil nudge--right" aria-hidden="true"></i> {{todo.task}} </div>
+  <div class="g--7 g-m--7 g-s--11 g-t--11">
+    <div *ngIf="!editMode" class="input-edit-container nudge--right container--baseline color--concrete" (click)="enterEditMode()"><i class="fa fa-pencil nudge--left nudge--right" aria-hidden="true"></i> {{todo.task}} </div>
     <div *ngIf="editMode" class="input-field nudge--right">
       <input [(ngModel)]="todo.task" type="text" class="input-control" (blur)="editTodo(); leaveEditMode(); " (keyup.enter)="editTodo(); leaveEditMode(); " placeholder="Edit your todo" />
       <span class="input-bar"></span>
     </div>
   </div>
 
-  <div class="g--6 g-m--6 g-s--12 g-t--12 no-margin-vertical container--baseline">
+  <div class="g--4 g-m--4 g-s--12 g-t--12 no-margin-vertical container--baseline">
     <select class="g--8 g-m--8 g-s--6 g-t--6" [(ngModel)]="todo.importance" (change)="editTodo()">
       <option [value]="1" value="1" [selected]="todo.importance==1">Low Importance</option>
       <option [value]="2" value="2" [selected]="todo.importance==2">Medium Importance</option>
