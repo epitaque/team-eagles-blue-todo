@@ -23,10 +23,10 @@
     border-color: $muted-color;
     width: 100%;
     margin-bottom: 0px;
-    &:focus {
+    &:focus,
+    &:not(:placeholder-shown) {
       border-color: transparent !important;
-      & ~ :before
-       {
+      & ~ :before {
         width: 100%;
       }
     }
