@@ -22,7 +22,7 @@ export class TodoListComponent implements OnInit {
     }
 
     ngOnInit() {
-        if(this.todoService.loggedIn == false) {
+        if(!this.todoService.loggedIn == true) {
             this.router.navigate(['/login']);
             return;
         }
@@ -38,9 +38,6 @@ export class TodoListComponent implements OnInit {
         this.todoService.todoStream.subscribe((todos: Todo[]) => {
             console.log("TodoService pushed todos");
             this.todos = todos;
-            for(let todo of todos) {
-                //todo.edit
-            }
         }, (error: string) => {
             this.error = error;
         }, () => {

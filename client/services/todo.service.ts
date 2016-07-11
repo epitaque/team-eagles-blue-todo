@@ -67,10 +67,10 @@ export class TodoService {
 			.subscribe((body: any) => {
 				console.log("checkUser res: ", body);
 				if(body.message) {
+					console.log("it doesn't. error: ", body.message);
 					this.loggedIn = false;
 					this.logoutStream.next(true);
 					this.user = null;
-					console.log("it doesn't. error: ", body.message);
 				}
 				else if(body.username && body.email) {
 					console.log("it does!: ", body.username, body.email );
@@ -84,7 +84,7 @@ export class TodoService {
 					this.loggedIn = true;
 				}
 				return;
-			})
+			});
 		return this.loginStream;
 	}
 
