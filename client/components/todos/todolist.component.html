@@ -29,7 +29,7 @@
 	<div class="td-list g--10 m--1">
 		<ul>
 			<li *ngFor="let todo of todos">
-				<todo (importance)="todo.importance" [todo]="todo"></todo>
+				<todo (todoUpdated)="todoUpdated($event)" [todo]="todo"></todo>
 			</li>
 		</ul>
 	</div>

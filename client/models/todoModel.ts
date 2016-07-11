@@ -1,4 +1,8 @@
+import {Subject} from 'rxjs/subject';
+
 export class Todo {
+	public _id: number;
+
 	constructor(
 		public task: string,
 		private __importance: number, // 1:low importance, 2: moderately important, 3: highly important

@@ -11,6 +11,7 @@ import {User} from '../models/user';
 // rxjs
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Subject} from 'rxjs/Subject';
 import '../components/app/rxjs-operators';
 
 @Injectable()
@@ -20,11 +21,15 @@ export class TodoService {
 	private logoutUrl: string;
 	private checkUserUrl: string;
 	private getTodosUrl: string;
+	private editTodosUrl: string;
 	private postTodosUrl: string;
+	private deleteTodosUrl: string;
 	private todos: Todo[];
 
 	public loggedIn: boolean;
 	public user: User;
+
+	public logoutStream: Subject<boolean>;
 	public loginStream: BehaviorSubject<LoginEvent>;
 	public todoStream: BehaviorSubject<Todo[]>;
 
@@ -37,14 +42,19 @@ export class TodoService {
 		this.loginUrl = baseUrl + 'login';
 		this.logoutUrl = baseUrl + 'logout';
 		this.getTodosUrl = baseUrl + 'todo';
+		this.editTodosUrl = baseUrl + 'todo';
 		this.postTodosUrl = baseUrl + 'todo';
 		this.checkUserUrl = baseUrl + 'self';
-
+		this.deleteTodosUrl = baseUrl + 'deletetodo';
+		this.logoutStream = new Subject<boolean>();
 		this.loginStream = new BehaviorSubject<LoginEvent>(null);
 		this.loginStream.subscribe((e) => {
 			console.log("LoginStream pushed: ", e);
 		})
 		this.todoStream = new BehaviorSubject<Todo[]>([]);
+		this.todoStream.subscribe((e) => {
+			console.log("todoStream pushed: ", e);
+		});
 		this.checkUser();
 	}
 
@@ -58,6 +68,7 @@ export class TodoService {
 				console.log("checkUser res: ", body);
 				if(body.message) {
 					this.loggedIn = false;
+					this.logoutStream.next(true);
 					this.user = null;
 					console.log("it doesn't. error: ", body.message);
 				}
@@ -200,10 +211,45 @@ export class TodoService {
 			.map((res: Response) => {
 				return this.extractData(res);
 			})
-			.subscribe((body: Object) => {
+			.subscribe((todos: Todo[]) => {
 				this.getTodos();
 			});
 		return this.todoStream;
+	}
+
+	public deleteTodo(todo: Todo): BehaviorSubject<Todo[]> {
+		let body = JSON.stringify({
+			todo: todo
+		});
+		let headers = new Headers({
+				'Content-Type': 'application/json'
+			});
+   		let options = new RequestOptions({ headers: headers });
+
+
+		this.http.post(this.deleteTodosUrl, body, options).subscribe((res: Response) => {
+			this.getTodos();
+		});
+
+		return this.todoStream;
+	}
+
+	public editTodo(todo) {
+		console.log("service editing todo");
+
+		let body = JSON.stringify({
+			todo: todo
+		});
+		let headers = new Headers({
+				'Content-Type': 'application/json'
+			});
+   		let options = new RequestOptions({ headers: headers });
+
+
+		this.http.put(this.editTodosUrl, body, options).subscribe((res) => {
+			console.log("put request response received", res);
+			this.getTodos();
+		});
 	}
 
 	private extractData(res: Response) {
