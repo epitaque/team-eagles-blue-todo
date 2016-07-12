@@ -38,7 +38,7 @@ export class TodoService {
 	constructor(@Inject(Http) private http: Http) {
 		console.log("TodoService", Math.random(), " instantiated.");
 
-		let baseUrl = window.location.origin;
+		let baseUrl = window.location.origin + '/';
 	 	this.editUserUrl = baseUrl + 'self';
 		this.registerUrl = baseUrl + 'signup';
 		this.editTodosUrl = baseUrl + 'self';

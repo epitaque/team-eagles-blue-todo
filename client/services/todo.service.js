@@ -25,7 +25,7 @@ var TodoService = (function () {
         var _this = this;
         this.http = http;
         console.log("TodoService", Math.random(), " instantiated.");
-        var baseUrl = window.location.origin;
+        var baseUrl = window.location.origin + '/';
         this.editUserUrl = baseUrl + 'self';
         this.registerUrl = baseUrl + 'signup';
         this.editTodosUrl = baseUrl + 'self';
