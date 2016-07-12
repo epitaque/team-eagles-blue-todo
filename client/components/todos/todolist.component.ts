@@ -16,6 +16,7 @@ export class TodoListComponent implements OnInit {
     private todos: Todo[];
     private error: string;
     private editStream: Subject<TodoEdit>;
+    private currentTodo: string;
 
     constructor(private todoService: TodoService, 
             private router: Router) {       
@@ -58,6 +59,7 @@ export class TodoListComponent implements OnInit {
 
     addTodo(todo: Todo): void {
         console.log("Adding todo", todo);
+        this.currentTodo = "";
         this.todoService.postTodo(todo);
     }
 }

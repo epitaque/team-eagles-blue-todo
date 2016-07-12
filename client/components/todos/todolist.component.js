@@ -51,6 +51,7 @@ var TodoListComponent = (function () {
     };
     TodoListComponent.prototype.addTodo = function (todo) {
         console.log("Adding todo", todo);
+        this.currentTodo = "";
         this.todoService.postTodo(todo);
     };
     TodoListComponent = __decorate([
