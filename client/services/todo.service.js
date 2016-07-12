@@ -25,7 +25,7 @@ var TodoService = (function () {
         var _this = this;
         this.http = http;
         console.log("TodoService", Math.random(), " instantiated.");
-        var baseUrl = 'http://localhost:8080/';
+        var baseUrl = 'http://blue-eagles-todo.herokuapp.com:8080/';
         this.editUserUrl = baseUrl + 'self';
         this.registerUrl = baseUrl + 'signup';
         this.editTodosUrl = baseUrl + 'self';

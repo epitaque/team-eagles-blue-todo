@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var TodoEdit_1 = require('../../models/TodoEdit');
+var todoEdit_1 = require('../../models/todoEdit');
 var TodoComponent = (function () {
     function TodoComponent() {
         this.todoUpdated = new core_1.EventEmitter();
@@ -22,7 +22,7 @@ var TodoComponent = (function () {
         ;
         console.log("editing todo", JSON.stringify(importance));
         setTimeout(function () {
-            _this.todoUpdated.emit(new TodoEdit_1.TodoEdit(false, _this.todo));
+            _this.todoUpdated.emit(new todoEdit_1.TodoEdit(false, _this.todo));
             return null;
         }, 100);
     };
@@ -33,7 +33,7 @@ var TodoComponent = (function () {
         this.editMode = false;
     };
     TodoComponent.prototype.removeTodo = function () {
-        this.todoUpdated.emit(new TodoEdit_1.TodoEdit(true, this.todo));
+        this.todoUpdated.emit(new todoEdit_1.TodoEdit(true, this.todo));
     };
     __decorate([
         core_1.Output(), 
