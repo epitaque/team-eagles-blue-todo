@@ -38,7 +38,7 @@ export class TodoService {
 	constructor(@Inject(Http) private http: Http) {
 		console.log("TodoService", Math.random(), " instantiated.");
 
-		let baseUrl = 'http://blue-eagles-todo.herokuapp.com:8080/';
+		let baseUrl = window.location.href;
 	 	this.editUserUrl = baseUrl + 'self';
 		this.registerUrl = baseUrl + 'signup';
 		this.editTodosUrl = baseUrl + 'self';
