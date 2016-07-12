@@ -17,4 +17,4 @@ dist
 .node_repl_history
 
 # Ignore compiled typescript
-/client/**/*.js.map
+
