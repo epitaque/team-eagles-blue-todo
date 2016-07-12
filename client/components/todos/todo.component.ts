@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {TodoService} from '../../services/todo.service';
-import {Todo} from '../../models/TodoModel';
-import {TodoEdit} from '../../models/TodoEdit';
+import {Todo} from '../../models/todoModel';
+import {TodoEdit} from '../../models/todoEdit';
 
 @Component({
     host: {
